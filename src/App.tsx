@@ -1,34 +1,20 @@
-import { useReducer } from "react";
-import { useGetHotListingQuery } from "./services/api";
+import { BrowserRouter } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
-function Listing() {
-    const { data, isError, isLoading } = useGetHotListingQuery();
-
-    return (
-        <div>
-            {isError ? (
-                <>Oh no, there was an error</>
-            ) : isLoading ? (
-                <>Loading...</>
-            ) : data ? (
-                <>
-                    <h3>{JSON.stringify(data.posts)}</h3>
-                </>
-            ) : null}
-        </div>
-    );
-}
+import Routes from "./features/routes/Routes";
+import Header from "./features/header/Header";
 
 export default function App() {
-    const [isListingMounted, toggleIsListingMounted] = useReducer(
-        (state) => !state,
-        true
-    );
     return (
-        <div>
-            <h1>Data fetching/caching example - RTK Query</h1>
-            <button onClick={toggleIsListingMounted}>Toggle listing</button>
-            {isListingMounted && <Listing />}
-        </div>
+        <>
+            <Toaster />
+
+            <BrowserRouter>
+                <Header />
+                <div className="min-h-screen bg-gray-200 pt-2 sm:px-5 md:px-28 lg:px-40">
+                    <Routes />
+                </div>
+            </BrowserRouter>
+        </>
     );
 }
