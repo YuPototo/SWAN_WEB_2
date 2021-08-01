@@ -1,30 +1,61 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { authApi, User } from "../../app/services/auth";
 
-interface User {
-    name: string;
-    karma: number;
-    id: number;
+interface UserState extends User {
+    karma?: number;
+    id?: number;
+}
+interface AuthState {
+    user: null | UserState;
+    token: string | null;
+    isAuthenticated: boolean;
 }
 
-const initialState = {
+const initialState: AuthState = {
     user: null,
     token: null,
     isAuthenticated: false,
-} as { user: null | User; token: string | null; isAuthenticated: boolean };
+};
 
 const slice = createSlice({
     name: "auth",
     initialState,
     reducers: {
         logout: () => initialState,
+        setUserStorage: (
+            state,
+            action: PayloadAction<{ user: { username: string }; token: string }>
+        ) => {
+            state.user = { username: action.payload.user.username };
+            state.token = action.payload.token;
+            state.isAuthenticated = true;
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(
+            authApi.endpoints.signup.matchFulfilled,
+            (state, { payload }) => {
+                state.token = payload.token;
+                state.user = { username: payload.user.username, karma: 0 };
+                state.isAuthenticated = true;
+            }
+        );
+        builder.addMatcher(
+            authApi.endpoints.login.matchFulfilled,
+            (state, { payload }) => {
+                state.token = payload.token;
+                state.user = { username: payload.user.username };
+                state.isAuthenticated = true;
+            }
+        );
     },
 });
 
-export const { logout } = slice.actions;
+export const { logout, setUserStorage } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) =>
     state.auth.isAuthenticated;
-export const selectUsername = (state: RootState) => state.auth.user?.name;
+export const selectUsername = (state: RootState) => state.auth.user?.username;
 export const selectKarma = (state: RootState) => state.auth.user?.karma;

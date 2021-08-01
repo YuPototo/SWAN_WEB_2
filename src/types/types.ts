@@ -3,12 +3,13 @@ interface Author {
     name: string;
 }
 
-interface Post {
+export interface Post {
     id: number;
     title: string;
     body: string;
     createdAt: string;
     updatedAt: string;
+    score: number;
     author: Author;
 }
 

@@ -5,6 +5,9 @@ import routeDict from "./routeDict";
 
 import Home from "../pageHome/Home";
 import Profile from "../pageProfile/Profile";
+import Signup from "../pageSignup/Signup";
+import Login from "../pageLogin/Login";
+import SubmitPost from "../pageSubmitPost/SubmitPost";
 import NotFound from "../page404/NotFound";
 
 export default function Routes(): ReactElement {
@@ -15,6 +18,15 @@ export default function Routes(): ReactElement {
             </Route>
             <Route path={routeDict.profile.path}>
                 <Profile />
+            </Route>
+            <Route path={routeDict.signup.path}>
+                <Signup />
+            </Route>
+            <Route path={routeDict.login.path}>
+                <Login />
+            </Route>
+            <Route path={routeDict.submitPost.path}>
+                <SubmitPost />
             </Route>
             <Route component={NotFound} />
         </Switch>
