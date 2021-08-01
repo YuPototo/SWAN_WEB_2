@@ -19,6 +19,10 @@ import toast from "react-hot-toast";
 
 type VoteDirection = 1 | -1;
 
+export interface PostInCard extends Post {
+    userVote?: VoteDirection;
+}
+
 const getScoreClass = (
     isAuthor: boolean,
     voteDirection?: VoteDirection
@@ -81,12 +85,10 @@ const UpvoteButton = ({
 };
 
 interface Props {
-    post: Post;
-    isAuthor: boolean;
-    voteDirection?: VoteDirection;
+    post: PostInCard;
 }
 
-export default function PostCard({ post, voteDirection }: Props): ReactElement {
+export default function PostCard({ post }: Props): ReactElement {
     const { id: postId, title, body, createdAt, score, author } = post;
     const { name: authorName } = author;
 
@@ -96,7 +98,7 @@ export default function PostCard({ post, voteDirection }: Props): ReactElement {
 
     const username = useAppSelector(selectUsername);
     const isAuthor = post.author.name === username;
-    const scoreClass = getScoreClass(isAuthor, voteDirection);
+    const scoreClass = getScoreClass(isAuthor, post.userVote);
 
     const handleDelete = async () => {
         const loadingToastId = toast.loading("等待中...");
@@ -119,13 +121,13 @@ export default function PostCard({ post, voteDirection }: Props): ReactElement {
         <div className="flex gap-4 items-center">
             <div className="flex flex-col items-center">
                 <UpvoteButton
-                    voteDirection={voteDirection}
+                    voteDirection={post.userVote}
                     isAuthor={isAuthor}
                     onClick={() => console.log("upvote")}
                 />
                 <div className={scoreClass}>{score}</div>
                 <DownvoteButton
-                    voteDirection={voteDirection}
+                    voteDirection={post.userVote}
                     onClick={() => console.log("downvote")}
                 />
             </div>

@@ -4,8 +4,7 @@ import { RootState } from "../store";
 
 export const emptySplitApi = createApi({
     reducerPath: "api",
-    // tagTypes: ["HotListing", "NewPosting", "User"],
-    tagTypes: ["Listing", "Post", "User"], // 暂时用这个，用户量变多后，再考虑改用上面那个
+    tagTypes: ["Listing", "Post", "User", "Vote"],
     baseQuery: fetchBaseQuery({
         baseUrl: config.BASE_URL,
         prepareHeaders: (headers, { getState }) => {
