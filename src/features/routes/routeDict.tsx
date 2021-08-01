@@ -27,7 +27,7 @@ const routeDict: RouteDict = {
         path: "/editPost/:postId",
         basePath: "/editPost",
     },
-    post: {
+    postPage: {
         path: "/post/:postId",
         basePath: "/post",
     },

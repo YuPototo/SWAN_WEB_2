@@ -8,6 +8,7 @@ import Profile from "../pageProfile/Profile";
 import Signup from "../pageSignup/Signup";
 import Login from "../pageLogin/Login";
 import SubmitPost from "../pageSubmitPost/SubmitPost";
+import PagePost from "../pagePost/PagePost";
 import NotFound from "../page404/NotFound";
 
 export default function Routes(): ReactElement {
@@ -27,6 +28,9 @@ export default function Routes(): ReactElement {
             </Route>
             <Route path={routeDict.submitPost.path}>
                 <SubmitPost />
+            </Route>
+            <Route path={routeDict.postPage.path}>
+                <PagePost />
             </Route>
             <Route component={NotFound} />
         </Switch>

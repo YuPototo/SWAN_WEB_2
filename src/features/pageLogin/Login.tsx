@@ -26,7 +26,6 @@ export default function Signup(): ReactElement {
                 history.push("/");
             }, 1500);
         } catch (err) {
-            console.log(err);
             toast.error(err.data?.message);
         } finally {
             toast.dismiss(loadingToastId);
@@ -71,7 +70,7 @@ export default function Signup(): ReactElement {
                         type="submit"
                         disabled={isLoading}
                     >
-                        创建账号
+                        登陆
                     </button>
                 </div>
                 <div>

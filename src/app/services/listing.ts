@@ -12,11 +12,11 @@ export const listingApi = emptySplitApi.injectEndpoints({
     endpoints: (build) => ({
         getHotListing: build.query<Listing, number>({
             query: (page: number) => `listing/hot?${pageToQuery(page)}`,
-            providesTags: ["Posts"],
+            providesTags: ["Listing"],
         }),
         getNewListing: build.query<Listing, number>({
             query: (page: number) => `listing/new?${pageToQuery(page)}`,
-            providesTags: ["Posts"],
+            providesTags: ["Listing"],
         }),
     }),
 });

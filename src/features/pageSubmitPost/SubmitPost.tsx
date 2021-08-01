@@ -2,14 +2,12 @@ import React, { ReactElement, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
+import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
+import { useCreatePostMutation } from "../../app/services/post";
 
 function SubmitPost(): ReactElement {
-    // hoosk
     const history = useHistory();
-    const dispatch = useAppDispatch();
 
     // * 检查是否处于登陆状态
     const isLogin = useAppSelector(selectIsAuthenticated);
@@ -25,6 +23,8 @@ function SubmitPost(): ReactElement {
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+    const [createPost, { isLoading }] = useCreatePostMutation();
+
     // * 本地状态和需要的全局状态
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
@@ -34,9 +34,13 @@ function SubmitPost(): ReactElement {
         event.preventDefault();
         const loadingToastId = toast.loading("等待中...");
         try {
-            // todo
+            const post = await createPost({ title, body }).unwrap();
+            toast.success(`发布成功`);
+            setTimeout(() => {
+                history.push(`post/${post.id}`);
+            }, 1500);
         } catch (err) {
-            toast.error(err.message);
+            toast.error(err.data?.message);
         } finally {
             toast.dismiss(loadingToastId);
         }
@@ -58,6 +62,7 @@ function SubmitPost(): ReactElement {
                         rows={2}
                         value={title}
                         autoFocus
+                        disabled={isLoading}
                         onChange={(e) => setTitle(e.target.value)}
                     ></textarea>
                 </div>
@@ -72,10 +77,15 @@ function SubmitPost(): ReactElement {
                         name="body"
                         value={body}
                         placeholder="URL"
+                        disabled={isLoading}
                         onChange={(e) => setBody(e.target.value)}
                     ></input>
                 </div>
-                <button className="btn btn-primary" type="submit">
+                <button
+                    className="btn btn-primary"
+                    type="submit"
+                    disabled={isLoading}
+                >
                     发布
                 </button>
             </form>
