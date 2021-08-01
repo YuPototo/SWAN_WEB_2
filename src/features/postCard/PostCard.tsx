@@ -6,10 +6,16 @@ import {
     CaretDown,
     CaretDownFill,
 } from "react-bootstrap-icons";
+import { useAppSelector } from "../../app/hooks";
+import { useHistory } from "react-router-dom";
+
+import { selectUsername } from "../../features/auth/authSlice";
 import { getTimeToNow } from "../../utils/timeDiff";
 import { shortenURL } from "../../utils/urlHelper";
+import { useDeletePostMutation } from "../../app/services/post";
 
 import { Post } from "../../types/types";
+import toast from "react-hot-toast";
 
 type VoteDirection = 1 | -1;
 
@@ -80,14 +86,34 @@ interface Props {
     voteDirection?: VoteDirection;
 }
 
-export default function PostCard({
-    post,
-    isAuthor,
-    voteDirection,
-}: Props): ReactElement {
+export default function PostCard({ post, voteDirection }: Props): ReactElement {
     const { id: postId, title, body, createdAt, score, author } = post;
     const { name: authorName } = author;
+
+    const history = useHistory();
+
+    const [deletePost] = useDeletePostMutation();
+
+    const username = useAppSelector(selectUsername);
+    const isAuthor = post.author.name === username;
     const scoreClass = getScoreClass(isAuthor, voteDirection);
+
+    const handleDelete = async () => {
+        const loadingToastId = toast.loading("等待中...");
+
+        try {
+            await deletePost({ postId }).unwrap();
+            toast.success("删除成功");
+
+            setTimeout(() => {
+                history.push(`/`);
+            }, 1500);
+        } catch (err) {
+            toast.error(err.data?.message);
+        } finally {
+            toast.dismiss(loadingToastId);
+        }
+    };
 
     return (
         <div className="flex gap-4 items-center">
@@ -132,6 +158,22 @@ export default function PostCard({
                     >
                         {shortenURL(body)}
                     </a>
+                ) : null}
+                {isAuthor ? (
+                    <div>
+                        <button
+                            className="text-sm text-gray-500 mr-3 hover:text-blue-500"
+                            onClick={() => history.push(`/editPost/${postId}`)}
+                        >
+                            编辑
+                        </button>
+                        <button
+                            className="text-sm text-gray-500 mr-3 hover:text-blue-500"
+                            onClick={handleDelete}
+                        >
+                            删除
+                        </button>
+                    </div>
                 ) : null}
             </div>
         </div>

@@ -28,7 +28,31 @@ export const postApi = emptySplitApi.injectEndpoints({
             invalidatesTags: ["Listing", "Post"],
             transformResponse: (response: PostResponse) => response.post,
         }),
+        editPost: build.mutation<
+            Post,
+            CreatePostRequestData & { postId: number }
+        >({
+            query: ({ postId, title, body }) => ({
+                url: `posts/${postId}`,
+                method: "PATCH",
+                body: { title, body },
+            }),
+            invalidatesTags: ["Listing", "Post"],
+            transformResponse: (response: PostResponse) => response.post,
+        }),
+        deletePost: build.mutation<void, { postId: number }>({
+            query: ({ postId }) => ({
+                url: `posts/${postId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Listing", "Post"],
+        }),
     }),
 });
 
-export const { useGetPostQuery, useCreatePostMutation } = postApi;
+export const {
+    useGetPostQuery,
+    useCreatePostMutation,
+    useEditPostMutation,
+    useDeletePostMutation,
+} = postApi;

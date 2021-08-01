@@ -34,6 +34,12 @@ function Post(): ReactElement {
     return (
         <div className="bg-white py-4 px-8 mx-auto md:max-w-2xl">
             <PostCard post={post} isAuthor={false} />
+            <button
+                className="btn btn-primary"
+                onClick={() => history.push("/")}
+            >
+                返回首页
+            </button>
         </div>
     );
 }

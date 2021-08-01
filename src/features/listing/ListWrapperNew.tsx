@@ -8,13 +8,13 @@ interface Props {
 }
 
 export default function ListNewWrapper({ currentPage }: Props): ReactElement {
-    const { data: listing } = useGetNewListingQuery(currentPage);
-    if (!listing) {
+    const { data: posts } = useGetNewListingQuery(currentPage);
+    if (!posts) {
         return <div>no posts</div>;
     }
     return (
         <div>
-            <PostList posts={listing.posts} />
+            <PostList posts={posts} />
         </div>
     );
 }

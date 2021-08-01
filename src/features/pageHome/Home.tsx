@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import toast from "react-hot-toast";
 
-import PostManager from "../listing/ListManager";
+import ListManager from "../listing/ListManager";
 import { selectIsAuthenticated } from "../auth/authSlice";
 
 export default function Home(): ReactElement {
@@ -32,7 +32,7 @@ export default function Home(): ReactElement {
                     发布一个链接
                 </button>
             </div>
-            <PostManager />
+            <ListManager />
         </div>
     );
 }

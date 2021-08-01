@@ -8,6 +8,7 @@ import Profile from "../pageProfile/Profile";
 import Signup from "../pageSignup/Signup";
 import Login from "../pageLogin/Login";
 import SubmitPost from "../pageSubmitPost/SubmitPost";
+import EditPost from "../pageEditPost/EditPost";
 import PagePost from "../pagePost/PagePost";
 import NotFound from "../page404/NotFound";
 
@@ -31,6 +32,9 @@ export default function Routes(): ReactElement {
             </Route>
             <Route path={routeDict.postPage.path}>
                 <PagePost />
+            </Route>
+            <Route path={routeDict.editPost.path}>
+                <EditPost />
             </Route>
             <Route component={NotFound} />
         </Switch>
