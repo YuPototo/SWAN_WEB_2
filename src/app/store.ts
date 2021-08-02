@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { emptySplitApi } from "./services";
 import auth from "../features/auth/authSlice";
+import vote from "../features/vote/voteSlice";
 
 export const store = configureStore({
     reducer: {
         [emptySplitApi.reducerPath]: emptySplitApi.reducer,
         auth,
+        vote,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(emptySplitApi.middleware),

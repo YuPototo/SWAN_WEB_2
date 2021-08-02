@@ -1,9 +1,9 @@
 import { emptySplitApi } from ".";
 
-type VoteRecord = {
+export interface VoteRecord {
     postId: number;
     direction: 1 | -1;
-};
+}
 
 interface VotesRecordsResponse {
     votes: VoteRecord[];
@@ -23,9 +23,34 @@ export const voteApi = emptySplitApi.injectEndpoints({
             }),
             transformResponse: (response: VotesRecordsResponse) =>
                 response.votes,
-            invalidatesTags: ["Vote"],
+        }),
+        addVote: build.mutation<VoteRecord, VoteRecord>({
+            query: (vote: VoteRecord) => ({
+                url: `votes/new`,
+                method: "POST",
+                body: vote,
+            }),
+        }),
+        reverseVote: build.mutation<VoteRecord, VoteRecord>({
+            query: (vote: VoteRecord) => ({
+                url: `votes/reverse`,
+                method: "POST",
+                body: vote,
+            }),
+        }),
+        deleteVote: build.mutation<{ postId: number }, { postId: number }>({
+            query: (data: { postId: number }) => ({
+                url: `votes/delete`,
+                method: "POST",
+                body: data,
+            }),
         }),
     }),
 });
 
-export const { useGetVotesMutation } = voteApi;
+export const {
+    useGetVotesMutation,
+    useAddVoteMutation,
+    useReverseVoteMutation,
+    useDeleteVoteMutation,
+} = voteApi;

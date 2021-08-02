@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 import PostCard from "../postCard/PostCard";
-import type { PostInCard } from "../postCard/PostCard";
+import type { Post } from "../../types/types";
 
 interface Props {
-    posts: PostInCard[];
+    posts: Post[];
 }
 
 export default function PostList({ posts }: Props): ReactElement {
