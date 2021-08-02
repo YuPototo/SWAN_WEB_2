@@ -186,8 +186,10 @@ export default function PostCard({ post }: Props): ReactElement {
                 </a>
                 <div className="text-xs my-0.5 text-gray-600">
                     <span
-                        className="mr-1 cursor-pointer"
-                        onClick={() => console.log("tbd")}
+                        className="mr-1"
+                        // onClick={() =>
+                        //     history.push(`/profile/${post.author.id}`)
+                        // }
                     >
                         {authorName}
                     </span>

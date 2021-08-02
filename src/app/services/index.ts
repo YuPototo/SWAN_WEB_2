@@ -4,7 +4,7 @@ import { RootState } from "../store";
 
 export const emptySplitApi = createApi({
     reducerPath: "api",
-    tagTypes: ["Listing", "Post", "User", "Vote"],
+    tagTypes: ["Listing", "Post", "User", "Vote", "CurrentUser"],
     baseQuery: fetchBaseQuery({
         baseUrl: config.BASE_URL,
         prepareHeaders: (headers, { getState }) => {

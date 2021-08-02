@@ -49,6 +49,13 @@ const slice = createSlice({
                 state.isAuthenticated = true;
             }
         );
+        builder.addMatcher(
+            authApi.endpoints.getUserInfo.matchFulfilled,
+            (state, { payload }) => {
+                state.user!.karma = payload.postKarma;
+                state.user!.id = payload.userId;
+            }
+        );
     },
 });
 

@@ -2,7 +2,7 @@ import { emptySplitApi } from ".";
 
 import { Post, Listing } from "../../types/types";
 
-const defaultItemLength = 5;
+const defaultItemLength = 30;
 
 const pageToQuery = (page: number): string => {
     return `skip=${page * defaultItemLength}&limit=${defaultItemLength}`;

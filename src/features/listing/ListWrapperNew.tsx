@@ -32,12 +32,16 @@ export default function ListNewWrapper({ currentPage }: Props): ReactElement {
             .catch((err) => console.log(err));
     }, [isLogin, isLoadingPost, currentPage, posts, getVotes]);
 
+    if (isLoadingPost) {
+        return <div className="bg-white p-2">加载中...</div>; // todo: 换成一个 spinner
+    }
+
     if (!posts) {
-        return <div>no posts</div>;
+        return <div>no posts ?</div>;
     }
     return (
-        <div>
+        <>
             <PostList posts={posts} />
-        </div>
+        </>
     );
 }

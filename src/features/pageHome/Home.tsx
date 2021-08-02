@@ -32,7 +32,9 @@ export default function Home(): ReactElement {
                     发布一个链接
                 </button>
             </div>
-            <ListManager />
+            <div className="flex-grow md:max-w-2xl">
+                <ListManager />
+            </div>
         </div>
     );
 }

@@ -32,14 +32,14 @@ export default function ListHotWrapper({ currentPage }: Props): ReactElement {
     }, [isLogin, isLoadingPost, currentPage, posts, getVotes]);
 
     if (isLoadingPost) {
-        return <div>加载中</div>; // 换成一个 spinner
+        return <div className="bg-white p-2">加载中...</div>; // todo: 换成一个 spinner
     }
     if (!posts) {
-        return <div>no posts</div>;
+        return <div>No Post?</div>;
     }
     return (
-        <div>
+        <>
             <PostList posts={posts} />
-        </div>
+        </>
     );
 }

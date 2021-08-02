@@ -8,8 +8,11 @@ import { setUserStorage } from "./features/auth/authSlice";
 import Routes from "./features/routes/Routes";
 import Header from "./features/header/Header";
 
+import { authApi } from "./app/services/auth";
+
 export default function App() {
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         const userStorage = localStorage.getItem("user");
         if (!userStorage) {
@@ -19,7 +22,9 @@ export default function App() {
         if (userInfo.user.username && userInfo.token) {
             dispatch(setUserStorage(userInfo));
         }
-    }, [dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
+        const result = dispatch(authApi.endpoints.getUserInfo.initiate());
+        return result.unsubscribe;
+    }, [dispatch]);
 
     return (
         <>

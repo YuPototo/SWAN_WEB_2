@@ -8,6 +8,7 @@ import {
     selectIsAuthenticated,
     logout,
 } from "../auth/authSlice";
+import toast from "react-hot-toast";
 
 function Brand(): ReactElement {
     const iconImage = "/watermelon.png";
@@ -31,6 +32,7 @@ export default function Header(): ReactElement {
     const handleLogout = () => {
         localStorage.removeItem("user");
         dispatch(logout());
+        toast.success("已登出");
     };
 
     return (
@@ -43,8 +45,8 @@ export default function Header(): ReactElement {
                 {isLogin ? (
                     <>
                         <span
-                            className="cursor-pointer"
-                            onClick={() => history.push(`/profile/${username}`)}
+                        // className="cursor-pointer"
+                        // onClick={() => history.push(`/profile/${username}`)}
                         >
                             {username}
                         </span>

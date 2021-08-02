@@ -14,6 +14,12 @@ export interface AuthRequest {
     password: string;
 }
 
+interface UserComplete {
+    userId: number;
+    username: string;
+    postKarma: number;
+}
+
 export const authApi = emptySplitApi.injectEndpoints({
     endpoints: (build) => ({
         signup: build.mutation<UserResponse, AuthRequest>({
@@ -22,7 +28,7 @@ export const authApi = emptySplitApi.injectEndpoints({
                 method: "POST",
                 body: requestBody,
             }),
-            invalidatesTags: ["User"],
+            invalidatesTags: ["CurrentUser"],
         }),
         login: build.mutation<UserResponse, AuthRequest>({
             query: (requestBody) => ({
@@ -30,9 +36,14 @@ export const authApi = emptySplitApi.injectEndpoints({
                 method: "POST",
                 body: requestBody,
             }),
-            invalidatesTags: ["User"],
+            invalidatesTags: ["CurrentUser"],
+        }),
+        getUserInfo: build.query<UserComplete, void>({
+            query: () => `/users/info`,
+            providesTags: ["CurrentUser"],
         }),
     }),
 });
 
-export const { useSignupMutation, useLoginMutation } = authApi;
+export const { useSignupMutation, useLoginMutation, useGetUserInfoQuery } =
+    authApi;

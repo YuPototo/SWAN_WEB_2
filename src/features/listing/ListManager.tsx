@@ -19,23 +19,31 @@ export default function PostManager(): ReactElement {
     };
 
     return (
-        <div>
-            <RankMethodPicker
-                rankMethod={rankMethod}
-                onChangeMethod={(rankMethod) =>
-                    handleChangeRankMethod(rankMethod)
-                }
-            />
-            {rankMethod === "hot" ? (
-                <ListWrapperHot currentPage={currentPage} />
-            ) : rankMethod === "new" ? (
-                <ListWrapperNew currentPage={currentPage} />
-            ) : null}
-            <Pager
-                hasNextPage={true}
-                hasLastPage={currentPage > 0}
-                onChangePage={(direction) => handleChangePage(direction)}
-            />
-        </div>
+        <>
+            <div className="bg-white p-2 rounded">
+                <RankMethodPicker
+                    rankMethod={rankMethod}
+                    onChangeMethod={(rankMethod) =>
+                        handleChangeRankMethod(rankMethod)
+                    }
+                />
+            </div>
+
+            <div className="mt-1">
+                {rankMethod === "hot" ? (
+                    <ListWrapperHot currentPage={currentPage} />
+                ) : rankMethod === "new" ? (
+                    <ListWrapperNew currentPage={currentPage} />
+                ) : null}
+            </div>
+
+            <div className="my-4">
+                <Pager
+                    hasNextPage={true}
+                    hasLastPage={currentPage > 0}
+                    onChangePage={(direction) => handleChangePage(direction)}
+                />
+            </div>
+        </>
     );
 }

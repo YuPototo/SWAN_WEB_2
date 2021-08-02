@@ -35,7 +35,7 @@ function Post(): ReactElement {
         <div className="bg-white py-4 px-8 mx-auto md:max-w-2xl">
             <PostCard post={post} />
             <button
-                className="btn btn-primary"
+                className="btn btn-primary mt-2 ml-5"
                 onClick={() => history.push("/")}
             >
                 返回首页
