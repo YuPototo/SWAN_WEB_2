@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 
 import { useLoginMutation } from "../../app/services/auth";
+import analytics from "../../analytics/analytics";
 
 export default function Signup(): ReactElement {
     const [username, setUsername] = useState("");
@@ -22,6 +23,7 @@ export default function Signup(): ReactElement {
             const data = await login({ username, password }).unwrap();
             toast.success(`欢迎，${data.user.username}`);
             localStorage.setItem("user", JSON.stringify(data));
+            analytics.sendEvent({ category: "user", action: "login" });
             setTimeout(() => {
                 history.push("/");
             }, 1500);

@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { Switch, Route } from "react-router-dom";
+import useGoogleAnalytics from "../../analytics/useAnalytics";
 
 import routeDict from "./routeDict";
 
@@ -13,6 +14,8 @@ import PagePost from "../pagePost/PagePost";
 import NotFound from "../page404/NotFound";
 
 export default function Routes(): ReactElement {
+    useGoogleAnalytics();
+
     return (
         <Switch>
             <Route exact path={routeDict.home.path}>

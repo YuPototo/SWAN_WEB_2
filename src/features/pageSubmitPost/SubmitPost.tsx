@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
 import { useCreatePostMutation } from "../../app/services/post";
+import analytics from "../../analytics/analytics";
 
 function SubmitPost(): ReactElement {
     const history = useHistory();
@@ -36,6 +37,7 @@ function SubmitPost(): ReactElement {
         try {
             const post = await createPost({ title, body }).unwrap();
             toast.success(`发布成功`);
+            analytics.sendEvent({ category: "post", action: "submit post" });
             setTimeout(() => {
                 history.push(`post/${post.id}`);
             }, 1500);

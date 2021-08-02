@@ -24,6 +24,7 @@ import { selectUserVoteByPostId } from "../../features/vote/voteSlice";
 
 import { Post } from "../../types/types";
 import toast from "react-hot-toast";
+import analytics from "../../analytics/analytics";
 
 type VoteDirection = 1 | -1;
 
@@ -149,12 +150,27 @@ export default function PostCard({ post }: Props): ReactElement {
             if (!userVote) {
                 addVote({ postId: post.id, direction: clickDirection });
                 setTempScore(tempScore + 1);
+                analytics.sendEvent({
+                    category: "vote",
+                    action: "vote post",
+                    label: "new",
+                });
             } else if (clickDirection === userVote) {
                 deleteVote({ postId: post.id });
                 setTempScore(tempScore - 1);
+                analytics.sendEvent({
+                    category: "vote",
+                    action: "vote post",
+                    label: "delete",
+                });
             } else if (clickDirection === -userVote) {
                 reverseVote({ postId: post.id, direction: clickDirection });
                 setTempScore(tempScore + clickDirection - userVote);
+                analytics.sendEvent({
+                    category: "vote",
+                    action: "vote post",
+                    label: "reverse",
+                });
             }
         } catch (err) {
             toast.error(err.message);

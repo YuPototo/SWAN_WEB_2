@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 
 import { useSignupMutation } from "../../app/services/auth";
+import analytics from "../../analytics/analytics";
 
 const checkUsernameError = (username: string): string | void => {
     if (username.length < 3) {
@@ -53,6 +54,7 @@ export default function Signup(): ReactElement {
             const data = await signup({ username, password }).unwrap();
             localStorage.setItem("user", JSON.stringify(data));
             toast.success(`欢迎，${data.user.username}`);
+            analytics.sendEvent({ category: "user", action: "signup" });
             setTimeout(() => {
                 history.push("/");
             }, 1500);

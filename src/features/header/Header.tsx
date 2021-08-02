@@ -9,6 +9,7 @@ import {
     logout,
 } from "../auth/authSlice";
 import toast from "react-hot-toast";
+import analytics from "../../analytics/analytics";
 
 function Brand(): ReactElement {
     const iconImage = "/watermelon.png";
@@ -32,6 +33,7 @@ export default function Header(): ReactElement {
     const handleLogout = () => {
         localStorage.removeItem("user");
         dispatch(logout());
+        analytics.sendEvent({ category: "user", action: "logout" });
         toast.success("已登出");
     };
 
