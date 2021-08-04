@@ -6,7 +6,7 @@ import {
     CaretDown,
     CaretDownFill,
 } from "react-bootstrap-icons";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useHistory } from "react-router-dom";
 
 import { selectUsername } from "../../features/auth/authSlice";
@@ -20,7 +20,8 @@ import {
     useReverseVoteMutation,
     useDeleteVoteMutation,
 } from "../../app/services/vote";
-import { selectUserVoteByPostId } from "../../features/vote/voteSlice";
+
+import { selectUserVoteByPostId, vote } from "../../features/vote/voteSlice";
 
 import { Post } from "../../types/types";
 import toast from "react-hot-toast";
@@ -98,6 +99,7 @@ export default function PostCard({ post }: Props): ReactElement {
     const { name: authorName } = author;
 
     const history = useHistory();
+    const dispatch = useAppDispatch();
 
     const [deletePost] = useDeletePostMutation();
     const [addVote] = useAddVoteMutation();
@@ -149,7 +151,10 @@ export default function PostCard({ post }: Props): ReactElement {
         try {
             if (!userVote) {
                 addVote({ postId: post.id, direction: clickDirection });
-                setTempScore(tempScore + 1);
+                dispatch(
+                    vote({ postId, direction: clickDirection, voteType: "add" })
+                );
+                setTempScore(tempScore + clickDirection);
                 analytics.sendEvent({
                     category: "vote",
                     action: "vote post",
@@ -157,7 +162,8 @@ export default function PostCard({ post }: Props): ReactElement {
                 });
             } else if (clickDirection === userVote) {
                 deleteVote({ postId: post.id });
-                setTempScore(tempScore - 1);
+                dispatch(vote({ postId, voteType: "delete" }));
+                setTempScore(tempScore - clickDirection);
                 analytics.sendEvent({
                     category: "vote",
                     action: "vote post",
@@ -165,6 +171,13 @@ export default function PostCard({ post }: Props): ReactElement {
                 });
             } else if (clickDirection === -userVote) {
                 reverseVote({ postId: post.id, direction: clickDirection });
+                dispatch(
+                    vote({
+                        postId,
+                        direction: clickDirection,
+                        voteType: "reverse",
+                    })
+                );
                 setTempScore(tempScore + clickDirection - userVote);
                 analytics.sendEvent({
                     category: "vote",

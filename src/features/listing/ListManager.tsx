@@ -16,6 +16,7 @@ export default function PostManager(): ReactElement {
     };
     const handleChangePage = (direction: 1 | -1) => {
         setCurrentPage(currentPage + direction);
+        window.scrollTo(0, 0);
     };
 
     return (
