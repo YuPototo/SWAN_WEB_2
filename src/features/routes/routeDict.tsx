@@ -32,7 +32,7 @@ const routeDict: RouteDict = {
         basePath: "/post",
     },
     profile: {
-        path: "/profile/:userId",
+        path: "/profile",
         basePath: "/profile",
     },
 };

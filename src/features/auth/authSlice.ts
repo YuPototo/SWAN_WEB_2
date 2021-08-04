@@ -66,3 +66,4 @@ export const selectIsAuthenticated = (state: RootState) =>
     state.auth.isAuthenticated;
 export const selectUsername = (state: RootState) => state.auth.user?.username;
 export const selectKarma = (state: RootState) => state.auth.user?.karma;
+export const selectUserId = (state: RootState) => state.auth.user?.id;

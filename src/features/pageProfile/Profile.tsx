@@ -1,15 +1,18 @@
 // 先不实现 profile 页面
 
 import { ReactElement } from "react";
-import { useParams } from "react-router-dom";
-
-import { useGetUserInfoByIdQuery } from "../../app/services/user";
+import { useAppSelector } from "../../app/hooks";
+import {
+    useGetUserInfoByIdQuery,
+    useGetUserPostsQuery,
+} from "../../app/services/user";
+import { selectUserId } from "../auth/authSlice";
+import PostList from "../listing/PostList";
 
 export default function Profile(): ReactElement {
-    const { userId: userIdString } = useParams<{ userId: string }>();
-    const userId = parseInt(userIdString);
-
+    const userId = useAppSelector(selectUserId) as number; // 技术债
     const { data: user } = useGetUserInfoByIdQuery(userId);
+    const { data: posts } = useGetUserPostsQuery(userId);
 
     return (
         <div>
@@ -24,7 +27,7 @@ export default function Profile(): ReactElement {
                 </div>
             </div>
 
-            <div>{/* <UserPostsContainer userId={userId} /> */}</div>
+            <div>{posts ? <PostList posts={posts} /> : null}</div>
         </div>
     );
 }

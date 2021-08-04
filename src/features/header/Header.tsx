@@ -47,8 +47,8 @@ export default function Header(): ReactElement {
                 {isLogin ? (
                     <>
                         <span
-                        // className="cursor-pointer"
-                        // onClick={() => history.push(`/profile/${username}`)}
+                            className="cursor-pointer"
+                            onClick={() => history.push(`/profile`)}
                         >
                             {username}
                         </span>
