@@ -99,8 +99,11 @@ function EditPost(): ReactElement {
                     type="submit"
                     disabled={isUpdating}
                 >
-                    发布
+                    确认更新
                 </button>
+                {/* <button className="btn btn-info--outline" disabled={isUpdating}>
+                    放弃
+                </button> */}
             </form>
         </div>
     );

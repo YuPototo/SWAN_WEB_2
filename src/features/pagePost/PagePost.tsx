@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 
 import { useGetPostQuery } from "../../app/services/post";
+
+import CommentBox from "./CommentBox";
 import PostCard from "../postCard/PostCard";
 
 function Post(): ReactElement {
@@ -32,14 +34,19 @@ function Post(): ReactElement {
     }
 
     return (
-        <div className="bg-white py-4 px-8 mx-auto md:max-w-2xl">
-            <PostCard post={post} />
-            <button
+        <div className="mx-auto md:max-w-2xl">
+            <div className="bg-white py-4 px-8 ">
+                <PostCard post={post} />
+                {/* <button
                 className="btn btn-primary mt-2 ml-5"
                 onClick={() => history.push("/")}
             >
                 返回首页
-            </button>
+            </button> */}
+            </div>
+            <div className="bg-white p-1 mt-2">
+                <CommentBox postId={post.id} />
+            </div>
         </div>
     );
 }

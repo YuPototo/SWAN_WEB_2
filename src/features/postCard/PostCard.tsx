@@ -6,6 +6,8 @@ import {
     CaretDown,
     CaretDownFill,
 } from "react-bootstrap-icons";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useHistory } from "react-router-dom";
 
@@ -34,11 +36,11 @@ const getScoreClass = (
     voteDirection?: VoteDirection
 ): string => {
     if (voteDirection === 1 || isAuthor) {
-        return "text-red-500";
+        return "text-red-500 mx-1";
     } else if (voteDirection === -1) {
-        return "text-blue-500";
+        return "text-blue-500 mx-1";
     }
-    return "text-gray-600";
+    return "text-gray-600 mx-1";
 };
 
 interface VoteButtonProps {
@@ -50,7 +52,7 @@ const DownvoteButton = ({ voteDirection, onClick }: VoteButtonProps) => {
     if (voteDirection === -1) {
         return (
             <CaretDownFill
-                size={28}
+                size={30}
                 className="text-blue-500 cursor-pointer"
                 onClick={() => onClick()}
             />
@@ -58,7 +60,7 @@ const DownvoteButton = ({ voteDirection, onClick }: VoteButtonProps) => {
     } else {
         return (
             <CaretDown
-                size={28}
+                size={30}
                 className="text-gray-400 hover:text-blue-500 cursor-pointer"
                 onClick={() => onClick()}
             />
@@ -74,16 +76,16 @@ const UpvoteButton = ({
     if (voteDirection === 1 || isAuthor) {
         return (
             <CaretUpFill
-                size={28}
-                className="text-red-500 cursor-pointer"
+                size={30}
+                className=" text-red-500 cursor-pointer"
                 onClick={onClick}
             />
         );
     } else {
         return (
             <CaretUp
-                size={28}
-                className="text-gray-400 hover:text-red-500 cursor-pointer"
+                size={30}
+                className=" text-gray-400 hover:text-red-500 cursor-pointer"
                 onClick={onClick}
             />
         );
@@ -191,28 +193,20 @@ export default function PostCard({ post }: Props): ReactElement {
     };
 
     return (
-        <div className="flex gap-4 items-center">
-            <div className="flex flex-col items-center">
-                <UpvoteButton
-                    voteDirection={userVote}
-                    isAuthor={isAuthor}
-                    onClick={() => clickVote(1, userVote)}
-                />
-                <div className={scoreClass}>{tempScore}</div>
-                <DownvoteButton
-                    voteDirection={userVote}
-                    onClick={() => clickVote(-1, userVote)}
-                />
-            </div>
-            <div>
-                <a
-                    href={body}
+        <div
+            style={{
+                gridTemplateRows: "1fr auto",
+                gridTemplateColumns: "auto 1fr",
+            }}
+            className="grid gap-1"
+        >
+            <div className="col-span-2 md:col-span-1 ">
+                <div
                     className="text-base cursor-pointer mb-2"
-                    rel="noreferrer"
-                    target="_blank"
+                    onClick={() => history.push(`/post/${post.id}`)}
                 >
                     {title}
-                </a>
+                </div>
                 <div className="text-xs my-0.5 text-gray-600">
                     <span
                         className="mr-1"
@@ -236,21 +230,50 @@ export default function PostCard({ post }: Props): ReactElement {
                         {shortenURL(body)}
                     </a>
                 ) : null}
+            </div>
+            <div className="flex content-center  md:col-start-1 md:row-start-1 md:row-span-2 md:items-center md:flex-col md:mr-1">
+                <UpvoteButton
+                    voteDirection={userVote}
+                    isAuthor={isAuthor}
+                    onClick={() => clickVote(1, userVote)}
+                />
+                <div className={scoreClass}>{tempScore}</div>
+                <DownvoteButton
+                    voteDirection={userVote}
+                    onClick={() => clickVote(-1, userVote)}
+                />
+            </div>
+            <div className="flex gap-1 ml-1 md:ml-0">
+                <button
+                    className="text-sm p-1 text-gray-500 hover:text-blue-500"
+                    onClick={() => history.push(`/post/${post.id}`)}
+                >
+                    评论
+                </button>
+                <CopyToClipboard
+                    text={post.body}
+                    onCopy={() => toast.success("已复制文章链接")}
+                >
+                    <button className="text-sm p-1 text-gray-500 hover:text-blue-500">
+                        分享
+                    </button>
+                </CopyToClipboard>
+
                 {isAuthor ? (
-                    <div>
+                    <>
                         <button
-                            className="text-sm text-gray-500 mr-3 hover:text-blue-500"
+                            className="text-sm p-1 text-gray-500 hover:text-blue-500"
                             onClick={() => history.push(`/editPost/${postId}`)}
                         >
                             编辑
                         </button>
                         <button
-                            className="text-sm text-gray-500 mr-3 hover:text-blue-500"
+                            className="text-sm p-1 text-gray-500 hover:text-blue-500"
                             onClick={handleDelete}
                         >
                             删除
                         </button>
-                    </div>
+                    </>
                 ) : null}
             </div>
         </div>

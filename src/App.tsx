@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch } from "./app/hooks";
 
@@ -9,6 +9,16 @@ import Routes from "./features/routes/Routes";
 import Header from "./features/header/Header";
 
 import { authApi } from "./app/services/auth";
+
+function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+}
 
 export default function App() {
     const dispatch = useAppDispatch();
@@ -31,6 +41,8 @@ export default function App() {
             <Toaster />
 
             <BrowserRouter>
+                <ScrollToTop />
+
                 <Header />
                 <div className="min-h-screen bg-gray-200 pt-2 sm:px-5 md:px-28 lg:px-40">
                     <Routes />

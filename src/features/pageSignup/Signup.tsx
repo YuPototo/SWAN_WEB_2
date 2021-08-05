@@ -59,7 +59,7 @@ export default function Signup(): ReactElement {
                 history.push("/");
             }, 1500);
         } catch (err) {
-            toast.error(err.data.message);
+            toast.error(err.data?.message);
         } finally {
             toast.dismiss(loadingToastId);
         }
