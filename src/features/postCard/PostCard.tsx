@@ -251,7 +251,7 @@ export default function PostCard({ post }: Props): ReactElement {
                     评论({post.commentCount})
                 </button>
                 <CopyToClipboard
-                    text={post.body}
+                    text={`http://haoxigua.top/post/${post.id}`} // 技术债啊
                     onCopy={() => toast.success("已复制文章链接")}
                 >
                     <button className="text-sm p-1 text-gray-500 hover:text-blue-500">

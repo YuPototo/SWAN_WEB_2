@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
 import { useHistory } from "react-router-dom";
+import analytics from "../../analytics/analytics";
 
 interface Props {
     postId: number;
@@ -39,6 +40,8 @@ export default function CommentBox({
         try {
             await addComment(data);
             toast.success("评论成功");
+            setComment("");
+            analytics.sendEvent({ category: "post", action: "submit comment" });
         } catch (err) {
             toast.error(err.data?.message);
         } finally {
