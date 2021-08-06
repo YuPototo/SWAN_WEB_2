@@ -1,6 +1,10 @@
-import { ReactElement, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useAddCommentMutation } from "../../app/services/comment";
 import toast from "react-hot-toast";
+
+import { useAppSelector } from "../../app/hooks";
+import { selectIsAuthenticated } from "../auth/authSlice";
+import { useHistory } from "react-router-dom";
 
 interface Props {
     postId: number;
@@ -11,10 +15,20 @@ export default function CommentBox({
     postId,
     parentCommentId,
 }: Props): ReactElement {
+    const history = useHistory();
     const [comment, setComment] = useState("");
     const [addComment] = useAddCommentMutation();
+    const isLogin = useAppSelector(selectIsAuthenticated);
 
     const submitComment = async () => {
+        if (!isLogin) {
+            toast("注册账号后，即可评论");
+            setTimeout(() => {
+                history.push("/signup");
+            }, 2000);
+            return;
+        }
+
         const data = {
             postId,
             parentId: parentCommentId,
@@ -32,6 +46,11 @@ export default function CommentBox({
         }
     };
 
+    // https://blaipratdesaba.com/react-typescript-cheatsheet-form-elements-and-onchange-event-types-8c2baf03230c
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setComment(e.target.value);
+    };
+
     return (
         <div className="m-1">
             <textarea
@@ -39,7 +58,7 @@ export default function CommentBox({
                 placeholder="说说你的想法"
                 rows={3}
                 value={comment}
-                onChange={(e) => setComment(e.target.value)}
+                onChange={handleChange}
             ></textarea>
             <div className="flex justify-end">
                 <button
