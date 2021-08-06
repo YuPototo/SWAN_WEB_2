@@ -4,8 +4,10 @@ import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
 
 import { useGetPostQuery } from "../../app/services/post";
+import { useGetCommentsByPostQuery } from "../../app/services/comment";
 
-import CommentBox from "./CommentBox";
+import CommentForm from "./CommentForm";
+import CommentTree from "./CommentTree";
 import PostCard from "../postCard/PostCard";
 
 function Post(): ReactElement {
@@ -14,10 +16,12 @@ function Post(): ReactElement {
     const { postId: postIdString } = useParams<{ postId: string }>();
     const postId = parseInt(postIdString);
 
-    const { data: post, isLoading } = useGetPostQuery(postId);
+    const { data: post, isLoading: isPostLoading } = useGetPostQuery(postId);
+    const { data: comments, isLoading: isCommentLoading } =
+        useGetCommentsByPostQuery(postId);
 
     useEffect(() => {
-        if (isLoading) return;
+        if (isPostLoading) return;
         if (!post) {
             const toastId = toast.error("找不到这篇内容");
             setTimeout(() => {
@@ -25,9 +29,9 @@ function Post(): ReactElement {
                 history.push("/");
             }, 1500);
         }
-    }, [isLoading, postId, history, post]);
+    }, [isPostLoading, postId, history, post]);
 
-    if (isLoading) return <div>加载中...</div>;
+    if (isPostLoading) return <div>加载中...</div>;
 
     if (!post) {
         return <></>;
@@ -35,17 +39,20 @@ function Post(): ReactElement {
 
     return (
         <div className="mx-auto md:max-w-2xl">
-            <div className="bg-white py-4 px-8 ">
+            <div className="bg-white p-3 px-4 rounded md:p-4 ">
                 <PostCard post={post} />
-                {/* <button
-                className="btn btn-primary mt-2 ml-5"
-                onClick={() => history.push("/")}
-            >
-                返回首页
-            </button> */}
             </div>
-            <div className="bg-white p-1 mt-2">
-                <CommentBox postId={post.id} />
+            <div className="bg-white p-1 mt-2 rounded">
+                <CommentForm postId={post.id} />
+            </div>
+            <div className="bg-white mt-2 p-3 px-4 rounded md:p-4">
+                {isCommentLoading ? (
+                    <div className="text-gray-500">...</div>
+                ) : comments && comments.length > 0 ? (
+                    <CommentTree commentTree={comments} />
+                ) : (
+                    <div className="text-sm text-gray-500">暂无评论</div>
+                )}
             </div>
         </div>
     );

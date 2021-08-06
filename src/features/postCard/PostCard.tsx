@@ -202,7 +202,7 @@ export default function PostCard({ post }: Props): ReactElement {
         >
             <div className="col-span-2 md:col-span-1 ">
                 <div
-                    className="text-base cursor-pointer mb-2"
+                    className="text-base text-gray-900 cursor-pointer mb-2"
                     onClick={() => history.push(`/post/${post.id}`)}
                 >
                     {title}
@@ -248,7 +248,7 @@ export default function PostCard({ post }: Props): ReactElement {
                     className="text-sm p-1 text-gray-500 hover:text-blue-500"
                     onClick={() => history.push(`/post/${post.id}`)}
                 >
-                    评论
+                    评论({post.commentCount})
                 </button>
                 <CopyToClipboard
                     text={post.body}
