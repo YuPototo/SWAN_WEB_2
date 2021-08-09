@@ -43,7 +43,10 @@ function Post(): ReactElement {
                 <PostCard post={post} />
             </div>
             <div className="bg-white p-1 mt-2 rounded">
-                <CommentForm postId={post.id} />
+                <CommentForm
+                    postId={post.id}
+                    onCancel={() => console.log("不需要")}
+                />
             </div>
             <div className="bg-white mt-2 p-3 px-4 rounded md:p-4">
                 {isCommentLoading ? (

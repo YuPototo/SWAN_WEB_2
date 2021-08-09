@@ -10,16 +10,20 @@ import analytics from "../../analytics/analytics";
 interface Props {
     postId: number;
     parentCommentId?: number;
+    onCancel: () => void;
 }
 
 export default function CommentBox({
     postId,
     parentCommentId,
+    onCancel,
 }: Props): ReactElement {
     const history = useHistory();
     const [comment, setComment] = useState("");
     const [addComment] = useAddCommentMutation();
     const isLogin = useAppSelector(selectIsAuthenticated);
+
+    const isCommentReply = parentCommentId !== undefined;
 
     const submitComment = async () => {
         if (!isLogin) {
@@ -27,6 +31,11 @@ export default function CommentBox({
             setTimeout(() => {
                 history.push("/signup");
             }, 2000);
+            return;
+        }
+
+        if (comment.trim().length === 0) {
+            toast("你好像什么也没写");
             return;
         }
 
@@ -41,6 +50,9 @@ export default function CommentBox({
             await addComment(data);
             toast.success("评论成功");
             setComment("");
+            if (isCommentReply) {
+                onCancel();
+            }
             analytics.sendEvent({ category: "post", action: "submit comment" });
         } catch (err) {
             toast.error(err.data?.message);
@@ -64,8 +76,17 @@ export default function CommentBox({
                 onChange={handleChange}
             ></textarea>
             <div className="flex justify-end">
+                {isCommentReply ? (
+                    <button
+                        className="btn-sm btn-info--outline"
+                        onClick={() => onCancel()}
+                    >
+                        取消
+                    </button>
+                ) : null}
+
                 <button
-                    className="btn btn-info--outline mr-3"
+                    className="btn-sm btn-primary mx-3"
                     onClick={submitComment}
                 >
                     发表评论
