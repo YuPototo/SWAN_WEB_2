@@ -14,6 +14,11 @@ interface AddCommentRequestData {
     parentId?: number;
 }
 
+interface UpdateCommentArgs {
+    body: string;
+    commentId: number;
+}
+
 export const commentApi = emptySplitApi.injectEndpoints({
     endpoints: (build) => ({
         getCommentsByPost: build.query<CommentTree, PostId>({
@@ -39,6 +44,14 @@ export const commentApi = emptySplitApi.injectEndpoints({
             }),
             invalidatesTags: ["Comment"],
         }),
+        updateComment: build.mutation<{ comment: Comment }, UpdateCommentArgs>({
+            query: ({ commentId, body }: UpdateCommentArgs) => ({
+                url: `comments/${commentId}`,
+                method: "PATCH",
+                body: { body },
+            }),
+            invalidatesTags: ["Comment"],
+        }),
     }),
 });
 
@@ -46,4 +59,5 @@ export const {
     useGetCommentsByPostQuery,
     useAddCommentMutation,
     useDeleteCommentMutation,
+    useUpdateCommentMutation,
 } = commentApi;

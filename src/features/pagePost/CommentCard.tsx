@@ -2,6 +2,7 @@ import { ReactElement, useState } from "react";
 import { CommentTreeNode } from "../../types/types";
 import { getTimeToNow } from "../../utils/timeDiff";
 import CommentForm from "./CommentForm";
+import UpdatingCommentForm from "./UpdatingCommentForm";
 
 import { ArrowsAngleExpand } from "react-bootstrap-icons";
 import { useAppSelector } from "../../app/hooks";
@@ -31,6 +32,7 @@ interface Props {
 export default function CommentCard({ comment }: Props): ReactElement {
     const [isFolded, setIsFolded] = useState(false);
     const [showCommentForm, setShowCommentForm] = useState(false);
+    const [showUpdateCommentForm, setShowUpdateCommentForm] = useState(false);
     const [deleteComment, { isLoading: isDeleting }] =
         useDeleteCommentMutation();
 
@@ -49,6 +51,11 @@ export default function CommentCard({ comment }: Props): ReactElement {
             toast.dismiss(loadingToastId);
         }
     };
+
+    const handleUpdate = () => {
+        setShowUpdateCommentForm(true);
+    };
+
     if (isFolded) {
         return (
             <div className="mt-3 flex content-center">
@@ -84,6 +91,11 @@ export default function CommentCard({ comment }: Props): ReactElement {
                         <div className="mb-4 mt-2 text-gray-400 text-sm">
                             该评论已被删除
                         </div>
+                    ) : showUpdateCommentForm ? (
+                        <UpdatingCommentForm
+                            comment={comment}
+                            onCancel={() => setShowUpdateCommentForm(false)}
+                        />
                     ) : (
                         <>
                             <div
@@ -101,12 +113,17 @@ export default function CommentCard({ comment }: Props): ReactElement {
                                     回复
                                 </button>
                                 {isAuthor ? (
-                                    <button
-                                        onClick={handleDelete}
-                                        disabled={isDeleting}
-                                    >
-                                        删除
-                                    </button>
+                                    <>
+                                        <button onClick={handleUpdate}>
+                                            编辑
+                                        </button>
+                                        <button
+                                            onClick={handleDelete}
+                                            disabled={isDeleting}
+                                        >
+                                            删除
+                                        </button>
+                                    </>
                                 ) : null}
                             </div>
                         </>

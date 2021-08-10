@@ -1,29 +1,23 @@
 import React, { ReactElement, useState } from "react";
-import { useAddCommentMutation } from "../../app/services/comment";
+import { useUpdateCommentMutation } from "../../app/services/comment";
 import toast from "react-hot-toast";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
 import { useHistory } from "react-router-dom";
 import analytics from "../../analytics/analytics";
+import { CommentTreeNode } from "../../types/types";
 
 interface Props {
-    postId: number;
-    parentCommentId?: number;
+    comment: CommentTreeNode;
     onCancel: () => void;
 }
 
-export default function CommentBox({
-    postId,
-    parentCommentId,
-    onCancel,
-}: Props): ReactElement {
+export default function CommentBox({ comment, onCancel }: Props): ReactElement {
     const history = useHistory();
-    const [comment, setComment] = useState("");
-    const [addComment] = useAddCommentMutation();
+    const [commentBody, setComment] = useState(comment.body);
+    const [updateComment] = useUpdateCommentMutation();
     const isLogin = useAppSelector(selectIsAuthenticated);
-
-    const isCommentReply = parentCommentId !== undefined;
 
     const submitComment = async () => {
         if (!isLogin) {
@@ -34,28 +28,25 @@ export default function CommentBox({
             return;
         }
 
-        if (comment.trim().length === 0) {
+        if (commentBody.trim().length === 0) {
             toast("你好像什么也没写");
             return;
         }
 
-        const data = {
-            postId,
-            parentId: parentCommentId,
-            body: comment,
-        };
         const loadingToastId = toast.loading("等待中...");
 
         try {
-            await addComment(data).unwrap();
-            toast.success("评论成功");
+            await updateComment({
+                commentId: comment.id,
+                body: commentBody,
+            }).unwrap();
+            toast.success("更新成功");
+
             setComment("");
-            if (isCommentReply) {
-                onCancel();
-            }
+            onCancel();
             analytics.sendEvent({
                 category: "comment",
-                action: "submit comment",
+                action: "update comment",
             });
         } catch (err) {
             toast.error(err.data?.message);
@@ -75,24 +66,22 @@ export default function CommentBox({
                 className="text-input w-full"
                 placeholder="说说你的想法"
                 rows={3}
-                value={comment}
+                value={commentBody}
                 onChange={handleChange}
             ></textarea>
             <div className="flex justify-end">
-                {isCommentReply ? (
-                    <button
-                        className="btn-sm btn-info--outline"
-                        onClick={() => onCancel()}
-                    >
-                        取消
-                    </button>
-                ) : null}
+                <button
+                    className="btn-sm btn-info--outline"
+                    onClick={() => onCancel()}
+                >
+                    取消
+                </button>
 
                 <button
                     className="btn-sm btn-primary mx-3"
                     onClick={submitComment}
                 >
-                    发表评论
+                    更新评论
                 </button>
             </div>
         </div>
