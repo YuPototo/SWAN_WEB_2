@@ -4,6 +4,10 @@ import { getTimeToNow } from "../../utils/timeDiff";
 import CommentForm from "./CommentForm";
 
 import { ArrowsAngleExpand } from "react-bootstrap-icons";
+import { useAppSelector } from "../../app/hooks";
+import { selectUsername } from "../../features/auth/authSlice";
+import { useDeleteCommentMutation } from "../../app/services/comment";
+import toast from "react-hot-toast";
 
 interface UserNameProps {
     authorName: string;
@@ -27,7 +31,24 @@ interface Props {
 export default function CommentCard({ comment }: Props): ReactElement {
     const [isFolded, setIsFolded] = useState(false);
     const [showCommentForm, setShowCommentForm] = useState(false);
+    const [deleteComment, { isLoading: isDeleting }] =
+        useDeleteCommentMutation();
 
+    const username = useAppSelector(selectUsername);
+    const isAuthor = comment.author.name === username;
+
+    const handleDelete = async () => {
+        const loadingToastId = toast.loading("等待中...");
+
+        try {
+            await deleteComment(comment.id);
+            toast.success("删除成功");
+        } catch (err) {
+            toast.error(err.data?.message);
+        } finally {
+            toast.dismiss(loadingToastId);
+        }
+    };
     if (isFolded) {
         return (
             <div className="mt-3 flex content-center">
@@ -59,17 +80,37 @@ export default function CommentCard({ comment }: Props): ReactElement {
                     <div className="w-0.5 h-full bg-gray-300 comment-card-border"></div>
                 </div>
                 <div className="ml-3 w-full">
-                    <div
-                        className="mb-4 text-gray-800"
-                        style={{ whiteSpace: "pre-wrap" }}
-                    >
-                        {comment.body}
-                    </div>
-                    <div className="mb-4 text-gray-500 text-xs">
-                        <button onClick={() => setShowCommentForm(true)}>
-                            回复
-                        </button>
-                    </div>
+                    {comment.isDeleted ? (
+                        <div className="mb-4 mt-2 text-gray-400 text-sm">
+                            该评论已被删除
+                        </div>
+                    ) : (
+                        <>
+                            <div
+                                className="mb-4 mt-2 text-gray-800"
+                                style={{ whiteSpace: "pre-wrap" }}
+                            >
+                                {comment.body}
+                            </div>
+
+                            <div className="mb-4 text-gray-500 text-xs flex gap-2">
+                                <button
+                                    onClick={() => setShowCommentForm(true)}
+                                    disabled={isDeleting}
+                                >
+                                    回复
+                                </button>
+                                {isAuthor ? (
+                                    <button
+                                        onClick={handleDelete}
+                                        disabled={isDeleting}
+                                    >
+                                        删除
+                                    </button>
+                                ) : null}
+                            </div>
+                        </>
+                    )}
 
                     {showCommentForm ? (
                         <CommentForm

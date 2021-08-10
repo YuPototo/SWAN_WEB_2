@@ -26,6 +26,7 @@ export interface Comment {
     parentId?: number;
     createdAt: string;
     updatedAt: string;
+    isDeleted: boolean;
     author: Author;
 }
 

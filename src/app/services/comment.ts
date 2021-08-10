@@ -32,7 +32,18 @@ export const commentApi = emptySplitApi.injectEndpoints({
                 invalidatesTags: ["Comment"],
             }
         ),
+        deleteComment: build.mutation<void, number>({
+            query: (commentId: number) => ({
+                url: `comments/${commentId}`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Comment"],
+        }),
     }),
 });
 
-export const { useGetCommentsByPostQuery, useAddCommentMutation } = commentApi;
+export const {
+    useGetCommentsByPostQuery,
+    useAddCommentMutation,
+    useDeleteCommentMutation,
+} = commentApi;
