@@ -38,7 +38,7 @@ export default function PostManager(): ReactElement {
                 ) : null}
             </div>
 
-            <div className="my-4">
+            <div className="my-2">
                 <Pager
                     hasNextPage={true}
                     hasLastPage={currentPage > 0}

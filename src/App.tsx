@@ -44,8 +44,10 @@ export default function App() {
                 <ScrollToTop />
 
                 <Header />
-                <div className="min-h-screen bg-gray-200 pt-2 sm:px-5 md:px-28 lg:px-40">
-                    <Routes />
+                <div className="min-h-screen bg-gray-200 pt-2">
+                    <div className="max-w-4xl mx-auto">
+                        <Routes />
+                    </div>
                 </div>
             </BrowserRouter>
         </>

@@ -12,6 +12,10 @@ import SubmitPost from "../pageSubmitPost/SubmitPost";
 import EditPost from "../pageEditPost/EditPost";
 import PagePost from "../pagePost/PagePost";
 import NotFound from "../page404/NotFound";
+import TalkToMe from "../pageStatics/TalkToMe";
+import About from "../pageStatics/About";
+import Privacy from "../pageStatics/Privacy";
+import UserTerms from "../pageStatics/UserTerms";
 
 export default function Routes(): ReactElement {
     useGoogleAnalytics();
@@ -38,6 +42,18 @@ export default function Routes(): ReactElement {
             </Route>
             <Route path={routeDict.editPost.path}>
                 <EditPost />
+            </Route>
+            <Route path={routeDict.talkToMe.path}>
+                <TalkToMe />
+            </Route>
+            <Route path={routeDict.about.path}>
+                <About />
+            </Route>
+            <Route path={routeDict.privacy.path}>
+                <Privacy />
+            </Route>
+            <Route path={routeDict.userTerms.path}>
+                <UserTerms />
             </Route>
             <Route component={NotFound} />
         </Switch>

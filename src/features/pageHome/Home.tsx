@@ -22,8 +22,14 @@ export default function Home(): ReactElement {
     };
 
     return (
-        <div className="flex flex-col justify-center md:flex-row md:gap-3">
-            <div className="rounded	bg-white pl-10 p-3 mb-3 md:order-1 md:h-full md:p-3 md:text-center">
+        <div
+            className="md:grid md:gap-2"
+            style={{
+                gridTemplateRows: "auto auto auto",
+                gridTemplateColumns: "68% 32%",
+            }}
+        >
+            <div className="rounded bg-white p-4 mb-4 md:mb-0 md:col-start-2">
                 <p className="text-gray-700 mb-2">有想要分享的内容吗？</p>
                 <button
                     className="btn btn-primay--outline"
@@ -32,8 +38,14 @@ export default function Home(): ReactElement {
                     发布一个链接
                 </button>
             </div>
-            <div className="flex-grow md:max-w-2xl">
+            <div className="h-full md:col-start-1 md:row-span-full">
                 <ListManager />
+            </div>
+            <div className="p-2 text-sm flex gap-3 justify-center pb-4 text-gray-600 md:bg-white md:col-start-2 md:row-start-2 md:rounded md:flex-col md:p-4">
+                <a href="/qinyu">联系开发者</a>
+                <a href="/about">关于好西瓜</a>
+                <a href="/privacy">隐私协议</a>
+                <a href="/userTerms">用户协议</a>
             </div>
         </div>
     );

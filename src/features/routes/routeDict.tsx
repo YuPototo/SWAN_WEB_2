@@ -35,6 +35,22 @@ const routeDict: RouteDict = {
         path: "/profile",
         basePath: "/profile",
     },
+    talkToMe: {
+        path: "/qinyu",
+        basePath: "/qinyu",
+    },
+    about: {
+        path: "/about",
+        basePath: "/about",
+    },
+    privacy: {
+        path: "/privacy",
+        basePath: "/privacy",
+    },
+    userTerms: {
+        path: "/userTerms",
+        basePath: "/userTerms",
+    },
 };
 
 export default routeDict;

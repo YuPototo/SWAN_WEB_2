@@ -107,6 +107,7 @@ export default function Signup(): ReactElement {
                         </p>
                     ) : null}
                 </div>
+
                 <div className="mb-3">
                     <button
                         className="btn btn-primary"
@@ -115,6 +116,11 @@ export default function Signup(): ReactElement {
                     >
                         创建账号
                     </button>
+                </div>
+                <div className="my-2 text-gray-400 text-sm">
+                    创建账号视为同意
+                    <a href="/privacy">《好西瓜隐私协议》</a> 和
+                    <a href="/userTerms">《好西瓜用户协议》</a>
                 </div>
                 <div>
                     已有账号？去
