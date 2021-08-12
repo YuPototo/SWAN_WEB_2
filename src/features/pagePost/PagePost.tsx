@@ -40,7 +40,7 @@ function Post(): ReactElement {
     return (
         <div className="mx-auto md:max-w-2xl">
             <div className="bg-white p-3 px-4 rounded md:p-4 ">
-                <PostCard post={post} />
+                <PostCard post={post} showAll={true} />
             </div>
             <div className="bg-white p-1 mt-2 rounded">
                 <CommentForm

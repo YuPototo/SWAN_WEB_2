@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 
 import { selectUsername } from "../../features/auth/authSlice";
 import { getTimeToNow } from "../../utils/timeDiff";
-import { shortenURL } from "../../utils/urlHelper";
+import { shortenURL, clipLongString } from "../../utils/urlHelper";
 import { useDeletePostMutation } from "../../app/services/post";
 import { selectIsAuthenticated } from "../auth/authSlice";
 
@@ -93,11 +93,20 @@ const UpvoteButton = ({
 };
 
 interface Props {
+    showAll: boolean;
     post: Post;
 }
 
-export default function PostCard({ post }: Props): ReactElement {
-    const { id: postId, title, body, createdAt, score, author } = post;
+export default function PostCard({ post, showAll }: Props): ReactElement {
+    const {
+        id: postId,
+        title,
+        body,
+        createdAt,
+        score,
+        author,
+        postType,
+    } = post;
     const { name: authorName } = author;
 
     const history = useHistory();
@@ -196,7 +205,7 @@ export default function PostCard({ post }: Props): ReactElement {
         <div
             style={{
                 gridTemplateRows: "1fr auto",
-                gridTemplateColumns: "auto 1fr",
+                gridTemplateColumns: "1fr minmax(0, 100%)",
             }}
             className="grid gap-1"
         >
@@ -220,16 +229,28 @@ export default function PostCard({ post }: Props): ReactElement {
                         {createdAt ? getTimeToNow(createdAt) : undefined}
                     </span>
                 </div>
-                {body ? (
-                    <a
-                        href={body}
-                        className="text-sm link"
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        {shortenURL(body)}
-                    </a>
-                ) : null}
+                <div className="my-2">
+                    {body ? (
+                        postType === "URL" ? (
+                            <a
+                                href={body}
+                                className="text-sm link"
+                                rel="noreferrer"
+                                target="_blank"
+                            >
+                                {shortenURL(body, 30)}
+                            </a>
+                        ) : (
+                            <span
+                                className="text-sm text-gray-800 card-text"
+                                style={{ wordWrap: "break-word" }}
+                                onClick={() => history.push(`/post/${post.id}`)}
+                            >
+                                {showAll ? body : clipLongString(body, 150)}
+                            </span>
+                        )
+                    ) : null}
+                </div>
             </div>
             <div className="flex content-center  md:col-start-1 md:row-start-1 md:row-span-2 md:items-center md:flex-col md:mr-1">
                 <UpvoteButton
@@ -261,12 +282,17 @@ export default function PostCard({ post }: Props): ReactElement {
 
                 {isAuthor ? (
                     <>
-                        <button
-                            className="text-sm p-1 text-gray-500 hover:text-blue-500"
-                            onClick={() => history.push(`/editPost/${postId}`)}
-                        >
-                            编辑
-                        </button>
+                        {postType === "SELF_POST" ? (
+                            <button
+                                className="text-sm p-1 text-gray-500 hover:text-blue-500"
+                                onClick={() =>
+                                    history.push(`/editPost/${postId}`)
+                                }
+                            >
+                                编辑
+                            </button>
+                        ) : null}
+
                         <button
                             className="text-sm p-1 text-gray-500 hover:text-blue-500"
                             onClick={handleDelete}

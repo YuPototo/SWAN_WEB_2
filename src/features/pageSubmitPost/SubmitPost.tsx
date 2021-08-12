@@ -5,9 +5,13 @@ import toast from "react-hot-toast";
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
 import { useCreatePostMutation } from "../../app/services/post";
+import PostTypePicker, { PostType } from "./PostTypePicker";
+
 import analytics from "../../analytics/analytics";
 
 function SubmitPost(): ReactElement {
+    const [postType, setPostType] = useState<PostType>("SELF_POST");
+
     const history = useHistory();
 
     // * 检查是否处于登陆状态
@@ -35,7 +39,7 @@ function SubmitPost(): ReactElement {
         event.preventDefault();
         const loadingToastId = toast.loading("等待中...");
         try {
-            const post = await createPost({ title, body }).unwrap();
+            const post = await createPost({ title, body, postType }).unwrap();
             toast.success(`发布成功`);
             analytics.sendEvent({ category: "post", action: "submit post" });
             setTimeout(() => {
@@ -49,47 +53,70 @@ function SubmitPost(): ReactElement {
     };
 
     return (
-        <div className="bg-white py-4 px-8">
-            <h1 className="text-lg my-5">分享一个链接</h1>
+        <div className="bg-white py-2 px-2">
+            <h1 className="text-lg m-2 mb-4 text-gray-700">发布一个内容</h1>
+
+            <div className="mb-2">
+                <PostTypePicker
+                    postType={postType}
+                    onChangePostType={(postType) => setPostType(postType)}
+                />
+            </div>
             <form onSubmit={handleSubmit}>
-                <div className="mb-4 flex items-center">
-                    <label className="mr-2" htmlFor="title">
-                        标题
-                    </label>
+                <div className="mb-2 flex-col gap-3 items-center">
                     <textarea
-                        className="text-input flex-grow"
+                        className="text-input w-full mb-2"
                         id="title"
                         name="title"
-                        placeholder="起一个有吸引力的标题吧"
+                        placeholder="标题"
                         rows={2}
                         value={title}
                         autoFocus
                         disabled={isLoading}
                         onChange={(e) => setTitle(e.target.value)}
                     ></textarea>
+
+                    {postType === "URL" ? (
+                        <textarea
+                            className="text-input w-full"
+                            id="body"
+                            name="body"
+                            value={body}
+                            rows={3}
+                            placeholder="URL"
+                            disabled={isLoading}
+                            onChange={(e) => setBody(e.target.value)}
+                        ></textarea>
+                    ) : (
+                        <textarea
+                            className="text-input w-full"
+                            id="body"
+                            name="body"
+                            value={body}
+                            rows={3}
+                            placeholder="正文（选填）"
+                            disabled={isLoading}
+                            onChange={(e) => setBody(e.target.value)}
+                        ></textarea>
+                    )}
                 </div>
-                <div className="mb-4 flex items-center">
-                    <label className="mr-2" htmlFor="body">
-                        链接
-                    </label>
-                    <input
-                        className="text-input flex-grow"
-                        type="body"
-                        id="body"
-                        name="body"
-                        value={body}
-                        placeholder="URL"
+                <div className="flex gap-2 justify-end mr-3">
+                    <button
+                        className="btn btn-info--outline"
+                        type="button"
+                        onClick={() => history.go(-1)}
+                    >
+                        返回
+                    </button>
+
+                    <button
+                        className="btn btn-primary"
+                        type="submit"
                         disabled={isLoading}
-                        onChange={(e) => setBody(e.target.value)}
-                    ></input>
+                    >
+                        发布
+                    </button>
                 </div>
-                <button
-                    className="btn btn-primary"
-                    type="submit"
-                    disabled={isLoading}
-                >
-                    发布
-                </button>
             </form>
         </div>
     );

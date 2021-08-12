@@ -26,25 +26,29 @@ describe("remove3W", () => {
 
 describe("clipLongString", () => {
     it("should clip long url", () => {
-        const result = clipLongString("12345678901234567890123456789012345678");
+        const result = clipLongString(
+            "12345678901234567890123456789012345678",
+            30
+        );
         expect(result).toBe("123456789012345678901234567890...");
     });
 });
 
 describe("shortenURL()", () => {
     it("should remove http", () => {
-        const result = shortenURL("http://abc.com");
+        const result = shortenURL("http://abc.com", 30);
         expect(result).toBe("abc.com");
     });
 
     it("should remove https and www", () => {
-        const result = shortenURL("https://www.abc.com");
+        const result = shortenURL("https://www.abc.com", 30);
         expect(result).toBe("abc.com");
     });
 
     it("should remove https and www and shorten url", () => {
         const result = shortenURL(
-            "https://www.12345.com/12345678901234567890abc"
+            "https://www.12345.com/12345678901234567890abc",
+            30
         );
         expect(result).toBe("12345.com/12345678901234567890...");
     });

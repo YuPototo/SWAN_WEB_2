@@ -8,15 +8,15 @@ export const remove3W = (url: string) => {
     return url.replace("www.", "");
 };
 
-export const clipLongString = (s: string) => {
-    if (s.length > 30) {
-        return s.slice(0, 30) + "...";
+export const clipLongString = (s: string, len: number) => {
+    if (s.length > len) {
+        return s.slice(0, len) + "...";
     }
     return s;
 };
 
-export const shortenURL = (url: string) => {
+export const shortenURL = (url: string, len: number) => {
     const urlWithoutProtocol = removeProtocol(url);
     const urlWithout3W = remove3W(urlWithoutProtocol);
-    return clipLongString(urlWithout3W);
+    return clipLongString(urlWithout3W, len);
 };

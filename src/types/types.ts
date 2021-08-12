@@ -2,6 +2,7 @@ interface Author {
     id: number;
     name: string;
 }
+type POST_TYPE = "URL" | "SELF_POST";
 
 export interface Post {
     id: number;
@@ -12,6 +13,7 @@ export interface Post {
     score: number;
     commentCount: number;
     author: Author;
+    postType: POST_TYPE;
 }
 
 export interface Listing {

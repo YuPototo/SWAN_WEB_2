@@ -46,7 +46,7 @@ function EditPost(): ReactElement {
         }
 
         try {
-            await updatePost({ postId, title, body }).unwrap();
+            await updatePost({ postId, body }).unwrap();
             toast.success("更新成功");
 
             setTimeout(() => {
@@ -61,49 +61,41 @@ function EditPost(): ReactElement {
 
     return (
         <div className="bg-white py-4 px-8">
-            <h1 className="text-lg my-5">分享一个链接</h1>
+            <h1 className="text-lg my-5">编辑</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-4 flex items-center">
-                    <label className="mr-2" htmlFor="title">
-                        标题
-                    </label>
-                    <textarea
-                        className="text-input flex-grow"
-                        id="title"
-                        name="title"
-                        placeholder="起一个有吸引力的标题吧"
-                        rows={2}
-                        value={title}
-                        autoFocus
-                        disabled={isUpdating}
-                        onChange={(e) => setTitle(e.target.value)}
-                    ></textarea>
+                    <h1 className="text-lg">{title}</h1>
                 </div>
                 <div className="mb-4 flex items-center">
-                    <label className="mr-2" htmlFor="body">
-                        链接
-                    </label>
-                    <input
+                    <textarea
                         className="text-input flex-grow"
-                        type="body"
+                        rows={3}
                         id="body"
                         name="body"
                         value={body}
-                        placeholder="URL"
+                        placeholder="内容"
                         disabled={isUpdating}
                         onChange={(e) => setBody(e.target.value)}
-                    ></input>
+                    ></textarea>
                 </div>
-                <button
-                    className="btn btn-primary"
-                    type="submit"
-                    disabled={isUpdating}
-                >
-                    确认更新
-                </button>
-                {/* <button className="btn btn-info--outline" disabled={isUpdating}>
-                    放弃
-                </button> */}
+
+                <div className="flex gap-2 justify-end mr-3">
+                    <button
+                        className="btn btn-info--outline"
+                        type="button"
+                        onClick={() => history.go(-1)}
+                    >
+                        返回
+                    </button>
+
+                    <button
+                        className="btn btn-primary"
+                        type="submit"
+                        disabled={isUpdating}
+                    >
+                        确认更新
+                    </button>
+                </div>
             </form>
         </div>
     );

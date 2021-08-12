@@ -35,7 +35,7 @@ export default function Home(): ReactElement {
                     className="btn btn-primay--outline"
                     onClick={handleShare}
                 >
-                    发布一个链接
+                    发布一个内容
                 </button>
             </div>
             <div className="h-full md:col-start-1 md:row-span-full">

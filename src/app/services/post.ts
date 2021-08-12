@@ -10,6 +10,11 @@ interface PostResponse {
 export interface CreatePostRequestData {
     title: string;
     body: string;
+    postType: "URL" | "SELF_POST";
+}
+
+interface UpdatePostRequestData {
+    body: string;
 }
 
 export const postApi = emptySplitApi.injectEndpoints({
@@ -30,12 +35,12 @@ export const postApi = emptySplitApi.injectEndpoints({
         }),
         editPost: build.mutation<
             Post,
-            CreatePostRequestData & { postId: number }
+            UpdatePostRequestData & { postId: number }
         >({
-            query: ({ postId, title, body }) => ({
+            query: ({ postId, body }) => ({
                 url: `posts/${postId}`,
                 method: "PATCH",
-                body: { title, body },
+                body: { body },
             }),
             invalidatesTags: ["Listing", "Post"],
             transformResponse: (response: PostResponse) => response.post,
