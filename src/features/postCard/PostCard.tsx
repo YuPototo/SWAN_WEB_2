@@ -243,7 +243,10 @@ export default function PostCard({ post, showAll }: Props): ReactElement {
                         ) : (
                             <span
                                 className="text-sm text-gray-800 card-text"
-                                style={{ wordWrap: "break-word" }}
+                                style={{
+                                    wordWrap: "break-word",
+                                    whiteSpace: showAll ? "pre-wrap" : "normal",
+                                }}
                                 onClick={() => history.push(`/post/${post.id}`)}
                             >
                                 {showAll ? body : clipLongString(body, 150)}
