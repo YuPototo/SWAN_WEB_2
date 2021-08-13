@@ -15,6 +15,7 @@ export const forumApi = emptySplitApi.injectEndpoints({
     endpoints: (build) => ({
         getForumInfo: build.query<ForumInfo, number>({
             query: (forumId: number) => `forums/${forumId}`,
+            providesTags: ["Forum"],
         }),
         joinForum: build.mutation<Forum, number>({
             query: (forumId: number) => ({
@@ -22,7 +23,7 @@ export const forumApi = emptySplitApi.injectEndpoints({
                 method: "POST",
                 body: { forumId },
             }),
-            invalidatesTags: ["Listing"],
+            invalidatesTags: ["Listing", "Forum"],
         }),
         leaveForum: build.mutation<Forum, number>({
             query: (forumId: number) => ({
@@ -30,7 +31,7 @@ export const forumApi = emptySplitApi.injectEndpoints({
                 method: "POST",
                 body: { forumId },
             }),
-            invalidatesTags: ["Listing"],
+            invalidatesTags: ["Listing", "Forum"],
         }),
     }),
 });

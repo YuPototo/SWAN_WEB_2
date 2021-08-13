@@ -4,14 +4,19 @@ import { RootState } from "../store";
 
 export const emptySplitApi = createApi({
     reducerPath: "api",
-    tagTypes: ["Listing", "Post", "User", "Vote", "CurrentUser", "Comment"],
+    tagTypes: [
+        "Listing",
+        "Post",
+        "User",
+        "Vote",
+        "CurrentUser",
+        "Comment",
+        "Forum",
+    ],
     baseQuery: fetchBaseQuery({
         baseUrl: config.BASE_URL,
         prepareHeaders: (headers, { getState }) => {
-            // By default, if we have a token in the store, let's use that for authenticated requests
             const token = (getState() as RootState).auth.token;
-            console.log(token);
-
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }

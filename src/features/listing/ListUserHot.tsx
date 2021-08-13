@@ -3,6 +3,7 @@ import { useGetUserHotListingQuery } from "../../app/services/listing";
 import { useGetVotesMutation } from "../../app/services/vote";
 
 import PostList from "../../components/PostList";
+import NoForumHint from "./NoForumHint";
 
 interface Props {
     currentPage: number;
@@ -31,6 +32,10 @@ export default function ListUserHot({ currentPage }: Props): ReactElement {
     }
     if (!posts) {
         return <div>No Post?</div>;
+    }
+
+    if (posts.length === 0) {
+        return <NoForumHint />;
     }
 
     return (

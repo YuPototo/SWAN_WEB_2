@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
+import { useHistory } from "react-router-dom";
 
 import toast from "react-hot-toast";
 
@@ -14,12 +15,13 @@ import {
 
 /*
 bug：如果直接从浏览器进入某个社区，不会获取到正确的加入信息。
-我怀疑是因为 token 还没有真正的获取到
+原因： 
 */
 
 export default function PageForum(): ReactElement {
     const { forumId: forumIdString } = useParams<{ forumId: string }>();
     const forumId = parseInt(forumIdString);
+
     const isLogin = useAppSelector(selectIsAuthenticated);
 
     const { data: forumInfo, isLoading: isInfoLoading } =
@@ -28,7 +30,17 @@ export default function PageForum(): ReactElement {
     const [joinForum] = useJoinForumMutation();
     const [leaveForum] = useLeaveForumMutation();
 
+    const history = useHistory();
+
     const handleJoinForum = async () => {
+        if (!isLogin) {
+            toast("注册账号后，即可加入");
+            setTimeout(() => {
+                history.push("/signup");
+            }, 1500);
+            return;
+        }
+
         const loadingToastId = toast.loading("等待中...");
 
         try {
@@ -62,7 +74,7 @@ export default function PageForum(): ReactElement {
                 </h1>
                 {forumInfo?.hasJoined ? (
                     <div
-                        className="btn-sm btn-info--outline self-stretch mx-3 cursor-pointer md:self-start "
+                        className="btn-sm btn-info--outline mx-3 cursor-pointer md:self-start "
                         onClick={handleLeaveForum}
                     >
                         已加入

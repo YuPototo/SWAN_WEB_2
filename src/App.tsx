@@ -32,6 +32,7 @@ export default function App() {
         if (userInfo.user.username && userInfo.token) {
             dispatch(setUserStorage(userInfo));
         }
+        console.log("设置完成本地信息后");
         const result = dispatch(authApi.endpoints.getUserInfo.initiate());
         return result.unsubscribe;
     }, [dispatch]);
