@@ -1,22 +1,24 @@
 import { ReactElement, useEffect } from "react";
-import { useGetHotListingQuery } from "../../app/services/listing";
+import { useGetForumHotListingQuery } from "../../app/services/listing";
 import { useGetVotesMutation } from "../../app/services/vote";
-import { useAppSelector } from "../../app/hooks";
 
-import { selectIsAuthenticated } from "../auth/authSlice";
-
-import PostList from "./PostList";
+import PostList from "../../components/PostList";
 
 interface Props {
+    forumId: number;
     currentPage: number;
+    isLogin: boolean;
 }
 
-export default function ListHotWrapper({ currentPage }: Props): ReactElement {
+export default function ListAllHot({
+    forumId,
+    currentPage,
+    isLogin,
+}: Props): ReactElement {
     const { data: posts, isLoading: isLoadingPost } =
-        useGetHotListingQuery(currentPage);
-    const [getVotes] = useGetVotesMutation();
+        useGetForumHotListingQuery({ forumId, page: currentPage });
 
-    const isLogin = useAppSelector(selectIsAuthenticated);
+    const [getVotes] = useGetVotesMutation();
 
     // 获取用户对这些 post 的投票情况，比较丑陋，以后再改。
     useEffect(() => {
@@ -37,9 +39,10 @@ export default function ListHotWrapper({ currentPage }: Props): ReactElement {
     if (!posts) {
         return <div>No Post?</div>;
     }
+
     return (
         <>
-            <PostList posts={posts} />
+            <PostList posts={posts} showForumName={false} />
         </>
     );
 }

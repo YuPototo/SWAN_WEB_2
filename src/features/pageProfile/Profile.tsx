@@ -7,7 +7,7 @@ import {
     useGetUserPostsQuery,
 } from "../../app/services/user";
 import { selectUserId } from "../auth/authSlice";
-import PostList from "../listing/PostList";
+import PostList from "../../components/PostList";
 
 export default function Profile(): ReactElement {
     const userId = useAppSelector(selectUserId) as number; // 技术债
@@ -27,7 +27,9 @@ export default function Profile(): ReactElement {
                 </div>
             </div>
 
-            <div>{posts ? <PostList posts={posts} /> : null}</div>
+            <div>
+                {posts ? <PostList posts={posts} showForumName={true} /> : null}
+            </div>
         </div>
     );
 }

@@ -2,8 +2,13 @@ interface Author {
     id: number;
     name: string;
 }
+
 type POST_TYPE = "URL" | "SELF_POST";
 
+interface Forum {
+    id: number;
+    name: string;
+}
 export interface Post {
     id: number;
     title: string;
@@ -12,8 +17,9 @@ export interface Post {
     updatedAt: string;
     score: number;
     commentCount: number;
-    author: Author;
     postType: POST_TYPE;
+    author: Author;
+    forum: Forum;
 }
 
 export interface Listing {

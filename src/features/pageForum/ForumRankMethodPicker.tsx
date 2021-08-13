@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { HandThumbsUp, LightningCharge, Diamond } from "react-bootstrap-icons";
+import { HandThumbsUp, LightningCharge } from "react-bootstrap-icons";
 
-export type RankMethod = "hot" | "new" | "all";
+export type RankMethod = "hot" | "new";
 
 interface Props {
     hideAll: boolean;
@@ -10,7 +10,6 @@ interface Props {
 }
 
 export default function RankMethodPicker({
-    hideAll,
     rankMethod,
     onChangeMethod,
 }: Props): ReactElement {
@@ -29,11 +28,6 @@ export default function RankMethodPicker({
             ? selectedClass + " " + commonCss
             : notSelectedClass + " " + commonCss;
 
-    const allCssClass =
-        rankMethod === "all"
-            ? selectedClass + " " + commonCss
-            : notSelectedClass + " " + commonCss;
-
     return (
         <div className="ml-3 flex gap-2">
             <button
@@ -48,14 +42,6 @@ export default function RankMethodPicker({
             >
                 <LightningCharge size={20} /> <span className="ml-1">最新</span>
             </button>
-            {hideAll ? (
-                <button
-                    className={allCssClass}
-                    onClick={() => onChangeMethod("all")}
-                >
-                    <Diamond size={20} /> <span className="ml-1">全站</span>
-                </button>
-            ) : null}
         </div>
     );
 }

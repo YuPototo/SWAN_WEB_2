@@ -51,6 +51,10 @@ const routeDict: RouteDict = {
         path: "/userTerms",
         basePath: "/userTerms",
     },
+    forum: {
+        path: "/f/:forumId",
+        basePath: "/f",
+    },
 };
 
 export default routeDict;

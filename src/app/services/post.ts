@@ -11,6 +11,7 @@ export interface CreatePostRequestData {
     title: string;
     body: string;
     postType: "URL" | "SELF_POST";
+    forumId: number;
 }
 
 interface UpdatePostRequestData {

@@ -17,7 +17,7 @@ function Brand(): ReactElement {
     return (
         <a href="/" className="flex items-center">
             <img className="mr-2" src={iconImage} alt="brand icon" />
-            <span className="text-lg text-gray-700 font-serif">好西瓜</span>
+            <span className="text-gray-700 font-serif">好西瓜</span>
         </a>
     );
 }
@@ -47,14 +47,14 @@ export default function Header(): ReactElement {
                 {isLogin ? (
                     <>
                         <span
-                            className="cursor-pointer"
+                            className="text-sm text-gray-700 cursor-pointer"
                             onClick={() => history.push(`/profile`)}
                         >
                             {username}
                         </span>
-                        <span>({karma})</span>
+                        <span className="text-sm text-gray-700">({karma})</span>
                         <button
-                            className="btn btn-info--outline"
+                            className="btn-sm btn-info--outline"
                             onClick={handleLogout}
                         >
                             登出

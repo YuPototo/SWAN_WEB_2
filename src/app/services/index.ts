@@ -10,6 +10,8 @@ export const emptySplitApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const token = (getState() as RootState).auth.token;
+            console.log(token);
+
             if (token) {
                 headers.set("authorization", `Bearer ${token}`);
             }

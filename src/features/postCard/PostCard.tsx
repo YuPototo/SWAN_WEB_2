@@ -93,11 +93,16 @@ const UpvoteButton = ({
 };
 
 interface Props {
+    showForumName: boolean;
     showAll: boolean;
     post: Post;
 }
 
-export default function PostCard({ post, showAll }: Props): ReactElement {
+export default function PostCard({
+    post,
+    showAll,
+    showForumName,
+}: Props): ReactElement {
     const {
         id: postId,
         title,
@@ -207,27 +212,35 @@ export default function PostCard({ post, showAll }: Props): ReactElement {
                 gridTemplateRows: "1fr auto",
                 gridTemplateColumns: "1fr minmax(0, 100%)",
             }}
-            className="grid gap-1"
+            className="grid gap-1 bg-white rounded"
         >
-            <div className="col-span-2 md:col-span-1 ">
-                <div
-                    className="text-base text-gray-900 cursor-pointer mb-2"
-                    onClick={() => history.push(`/post/${post.id}`)}
-                >
-                    {title}
-                </div>
-                <div className="text-xs my-0.5 text-gray-600">
+            <div className="col-span-2 pt-3 px-4  md:col-span-1 md:px-1">
+                <div className="mb-1.5">
+                    {showForumName ? (
+                        <span
+                            className="text-xs mr-1 text-gray-800 cursor-pointer"
+                            onClick={() => history.push(`/f/${post.forum.id}`)}
+                        >
+                            {post.forum.name}
+                        </span>
+                    ) : null}
                     <span
-                        className="mr-1"
+                        className="mr-1 text-xs text-gray-500"
                         // onClick={() =>
                         //     history.push(`/profile/${post.author.id}`)
                         // }
                     >
                         {authorName}
                     </span>
-                    <span>
+                    <span className="text-xs text-gray-500">
                         {createdAt ? getTimeToNow(createdAt) : undefined}
                     </span>
+                </div>
+                <div
+                    className="text-lg text-gray-900 cursor-pointer mb-2"
+                    onClick={() => history.push(`/post/${post.forum.id}`)}
+                >
+                    {title}
                 </div>
                 <div className="my-2">
                     {body ? (
@@ -255,7 +268,7 @@ export default function PostCard({ post, showAll }: Props): ReactElement {
                     ) : null}
                 </div>
             </div>
-            <div className="flex content-center  md:col-start-1 md:row-start-1 md:row-span-2 md:items-center md:flex-col md:mr-1">
+            <div className="flex content-center pl-4 pr-2 md:px-1 md:pt-1 md:col-start-1 md:row-start-1 md:row-span-2 md:items-center md:flex-col md:mr-1 md:bg-gray-50">
                 <UpvoteButton
                     voteDirection={userVote}
                     isAuthor={isAuthor}
@@ -267,7 +280,7 @@ export default function PostCard({ post, showAll }: Props): ReactElement {
                     onClick={() => clickVote(-1, userVote)}
                 />
             </div>
-            <div className="flex gap-1 ml-1 md:ml-0">
+            <div className="flex gap-1 ml-1 pb-3 md:ml-0">
                 <button
                     className="text-sm p-1 text-gray-500 hover:text-blue-500"
                     onClick={() => history.push(`/post/${post.id}`)}

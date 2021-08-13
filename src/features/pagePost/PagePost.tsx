@@ -1,7 +1,6 @@
 import { ReactElement, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useHistory } from "react-router-dom";
 
 import { useGetPostQuery } from "../../app/services/post";
 import { useGetCommentsByPostQuery } from "../../app/services/comment";
@@ -39,8 +38,8 @@ function Post(): ReactElement {
 
     return (
         <div className="mx-auto md:max-w-2xl">
-            <div className="bg-white p-3 px-4 rounded md:p-4 ">
-                <PostCard post={post} showAll={true} />
+            <div className="">
+                <PostCard post={post} showAll={true} showForumName={true} />
             </div>
             <div className="bg-white p-1 mt-2 rounded">
                 <CommentForm

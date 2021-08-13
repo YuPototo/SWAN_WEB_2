@@ -1,47 +1,49 @@
 import { ReactElement, useState } from "react";
 
-import ListAllHot from "./ListAllHot";
-import ListAllNew from "./ListAllNew";
-import ListUserHot from "./ListUserHot";
-import ListUserNew from "./ListUserNew";
-
-import RankMethodPicker, { RankMethod } from "./RankMethodPicker";
+import ForumRankMethodPicker, { RankMethod } from "./ForumRankMethodPicker";
 import Pager from "../../components/Pager";
+import ListForumHot from "./ListForumHot";
+import ListForumNew from "./ListForumNew";
 
 interface ListWrapperProps {
+    forumId: number;
     isLogin: boolean;
     rankMethod: RankMethod;
     currentPage: number;
 }
 
 const ListWrapper = ({
-    isLogin,
+    forumId,
     rankMethod,
     currentPage,
+    isLogin,
 }: ListWrapperProps) => {
-    if (isLogin) {
-        if (rankMethod === "hot") {
-            return <ListUserHot currentPage={currentPage} />;
-        } else if (rankMethod === "new") {
-            return <ListUserNew currentPage={currentPage} />;
-        } else if (rankMethod === "all") {
-            return <ListAllHot currentPage={currentPage} isLogin={isLogin} />;
-        }
-    } else {
-        if (rankMethod === "hot") {
-            return <ListAllHot currentPage={currentPage} isLogin={isLogin} />;
-        } else if (rankMethod === "new") {
-            return <ListAllNew currentPage={currentPage} />;
-        }
+    if (rankMethod === "hot") {
+        return (
+            <ListForumHot
+                forumId={forumId}
+                isLogin={isLogin}
+                currentPage={currentPage}
+            />
+        );
+    } else if (rankMethod === "new") {
+        return (
+            <ListForumNew
+                forumId={forumId}
+                isLogin={isLogin}
+                currentPage={currentPage}
+            />
+        );
     }
     return <></>;
 };
 
 interface Props {
+    forumId: number;
     isLogin: boolean;
 }
 
-export default function PostManager({ isLogin }: Props): ReactElement {
+export default function PostManager({ isLogin, forumId }: Props): ReactElement {
     const [rankMethod, setRankMethod] = useState<RankMethod>("hot");
     const [currentPage, setCurrentPage] = useState(0);
 
@@ -57,7 +59,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
     return (
         <>
             <div className="bg-white p-2 rounded">
-                <RankMethodPicker
+                <ForumRankMethodPicker
                     hideAll={isLogin}
                     rankMethod={rankMethod}
                     onChangeMethod={(rankMethod) =>
@@ -68,6 +70,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
 
             <div className="mt-1">
                 <ListWrapper
+                    forumId={forumId}
                     isLogin={isLogin}
                     rankMethod={rankMethod}
                     currentPage={currentPage}

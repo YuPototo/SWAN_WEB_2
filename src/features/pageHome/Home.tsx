@@ -39,7 +39,7 @@ export default function Home(): ReactElement {
                 </button>
             </div>
             <div className="h-full md:col-start-1 md:row-span-full">
-                <ListManager />
+                <ListManager isLogin={isLogin} />
             </div>
             <div className="p-2 text-sm flex gap-3 justify-center pb-4 text-gray-600 md:bg-white md:col-start-2 md:row-start-2 md:rounded md:flex-col md:p-4">
                 <a href="/qinyu">联系开发者</a>

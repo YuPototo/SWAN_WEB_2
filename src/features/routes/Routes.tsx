@@ -16,6 +16,7 @@ import TalkToMe from "../pageStatics/TalkToMe";
 import About from "../pageStatics/About";
 import Privacy from "../pageStatics/Privacy";
 import UserTerms from "../pageStatics/UserTerms";
+import Forum from "../pageForum/PageForum";
 
 export default function Routes(): ReactElement {
     useGoogleAnalytics();
@@ -54,6 +55,9 @@ export default function Routes(): ReactElement {
             </Route>
             <Route path={routeDict.userTerms.path}>
                 <UserTerms />
+            </Route>
+            <Route path={routeDict.forum.path}>
+                <Forum />
             </Route>
             <Route component={NotFound} />
         </Switch>
