@@ -8,12 +8,12 @@ export default function NoForumHint(): ReactElement {
             <p className="text-sm">下面是本站的活跃社区</p>
             <ul className="ml-3 mt-3">
                 <li className="mb-2">
-                    <a href="/f/2" className="link ">
+                    <a href="/f/1" className="link ">
                         新闻
                     </a>
                 </li>
                 <li className="mb-2">
-                    <a href="/f/3" className="link">
+                    <a href="/f/2" className="link">
                         Python
                     </a>
                 </li>

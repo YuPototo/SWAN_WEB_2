@@ -66,30 +66,56 @@ export default function PageForum(): ReactElement {
         }
     };
 
+    const handleShare = () => {
+        if (!isLogin) {
+            toast("未登陆，请先创建账号😊");
+            setTimeout(() => {
+                history.push("/signup");
+            }, 1500);
+        } else {
+            history.push(`/submitPost?forumId=${forumId}`);
+        }
+    };
+
     return (
-        <div className="md:max-w-2xl">
+        <div
+            className="md:grid md:gap-2"
+            style={{
+                gridTemplateRows: "auto auto auto auto",
+                gridTemplateColumns: "68% 32%",
+            }}
+        >
             <div className="flex flex-col items-center bg-white my-2 py-3 rounded md:flex-row md:pl-5 md:py-5">
                 <h1 className="text-xl text-gray-700 mb-3 md:inline md:mb-0">
                     {isInfoLoading ? "社区" : forumInfo?.forum.name + " 社区"}
                 </h1>
                 {forumInfo?.hasJoined ? (
                     <div
-                        className="btn-sm btn-info--outline mx-3 cursor-pointer md:self-start "
+                        className="btn-sm btn-info--outline mx-3 cursor-pointer md:self-center "
                         onClick={handleLeaveForum}
                     >
                         已加入
                     </div>
                 ) : (
                     <button
-                        className="btn btn-primary self-stretch mx-3 cursor-pointer md:self-start"
+                        className="btn-sm btn-primary self-stretch mx-3 cursor-pointer md:self-center"
                         onClick={handleJoinForum}
                     >
                         加入
                     </button>
                 )}
             </div>
-
-            <div className="h-full md:col-start-1 md:row-span-full">
+            <div className="md:row-start-2 md:col-start-1"></div>
+            <div className="rounded bg-white p-4 my-2 md:row-span-2">
+                <p className="text-gray-700 mb-2">有想要分享的内容吗？</p>
+                <button
+                    className="btn btn-primay--outline"
+                    onClick={handleShare}
+                >
+                    发布一个内容
+                </button>
+            </div>
+            <div className="h-full md:row-start-3 md:col-start-1 md:-mt-6">
                 <ForumListManager forumId={forumId} isLogin={isLogin} />
             </div>
         </div>

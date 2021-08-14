@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import SelectForumMenu from "./SelectForumMenu";
@@ -14,17 +14,17 @@ import analytics from "../../analytics/analytics";
 const forums = [
     {
         id: 1,
-        name: "好西瓜",
-    },
-    {
-        id: 2,
         name: "新闻",
     },
     {
-        id: 3,
+        id: 2,
         name: "Python",
     },
 ];
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+}
 
 function SubmitPost(): ReactElement {
     const [postType, setPostType] = useState<PostType>("SELF_POST");
@@ -33,6 +33,18 @@ function SubmitPost(): ReactElement {
     const [selectedForum, setSelectedForum] = useState(initialForum);
 
     const history = useHistory();
+    let query = useQuery();
+
+    useEffect(() => {
+        const forumIdString = query.get("forumId");
+        if (forumIdString) {
+            let forumId = parseInt(forumIdString);
+            const selectedForum = forums.find((forum) => forum.id === forumId);
+            if (selectedForum) {
+                setSelectedForum(selectedForum);
+            }
+        }
+    }, [query]);
 
     // * 检查是否处于登陆状态
     const isLogin = useAppSelector(selectIsAuthenticated);

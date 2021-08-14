@@ -2,9 +2,10 @@ import { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import toast from "react-hot-toast";
+import { selectIsAuthenticated } from "../auth/authSlice";
 
 import ListManager from "../listing/ListManager";
-import { selectIsAuthenticated } from "../auth/authSlice";
+import ForumRecommendation from "./ForumRecommendation";
 
 export default function Home(): ReactElement {
     const history = useHistory();
@@ -25,7 +26,7 @@ export default function Home(): ReactElement {
         <div
             className="md:grid md:gap-2"
             style={{
-                gridTemplateRows: "auto auto auto",
+                gridTemplateRows: "auto auto auto auto",
                 gridTemplateColumns: "68% 32%",
             }}
         >
@@ -47,6 +48,7 @@ export default function Home(): ReactElement {
                 <a href="/privacy">隐私协议</a>
                 <a href="/userTerms">用户协议</a>
             </div>
+            <ForumRecommendation />
         </div>
     );
 }

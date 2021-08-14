@@ -238,7 +238,7 @@ export default function PostCard({
                 </div>
                 <div
                     className="text-lg text-gray-900 cursor-pointer mb-2"
-                    onClick={() => history.push(`/post/${post.forum.id}`)}
+                    onClick={() => history.push(`/post/${post.id}`)}
                 >
                     {title}
                 </div>
