@@ -94,6 +94,13 @@ const UpvoteButton = ({
     }
 };
 
+const renderWithStyle = (showStyle: boolean) => {
+    if (showStyle) {
+        return "render-html";
+    }
+    return "";
+};
+
 interface Props {
     showForumName: boolean;
     showAll: boolean;
@@ -261,11 +268,12 @@ export default function PostCard({
                                 className="text-sm text-gray-800 card-text"
                                 style={{
                                     wordWrap: "break-word",
-                                    whiteSpace: showAll ? "pre-wrap" : "normal",
+                                    //whiteSpace: showAll ? "pre-wrap" : "normal",
                                 }}
                                 onClick={() => history.push(`/post/${post.id}`)}
                             >
                                 <div
+                                    className={renderWithStyle(showAll)}
                                     dangerouslySetInnerHTML={{
                                         __html: showAll
                                             ? sanitizer(marked(body))

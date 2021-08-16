@@ -103,9 +103,10 @@ export default function CommentCard({ comment }: Props): ReactElement {
                         <>
                             <div
                                 className="mb-4 mt-2 text-gray-800"
-                                style={{ whiteSpace: "pre-wrap" }}
+                                //style={{ whiteSpace: "pre-wrap" }}
                             >
                                 <div
+                                    className="render-html"
                                     dangerouslySetInnerHTML={{
                                         __html: sanitizer(marked(comment.body)),
                                     }}
