@@ -7,6 +7,8 @@ import {
     CaretDownFill,
 } from "react-bootstrap-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import marked from "marked";
+import dompurify from "dompurify";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { useHistory } from "react-router-dom";
@@ -127,6 +129,7 @@ export default function PostCard({
     const userVote = useAppSelector(selectUserVoteByPostId(post.id));
     const scoreClass = getScoreClass(isAuthor, userVote);
     const isLogin = useAppSelector(selectIsAuthenticated);
+    const sanitizer = dompurify.sanitize;
 
     const [tempScore, setTempScore] = useState(score); // 这个处理本地 score 的方法不完美，以后再改
 
@@ -262,7 +265,16 @@ export default function PostCard({
                                 }}
                                 onClick={() => history.push(`/post/${post.id}`)}
                             >
-                                {showAll ? body : clipLongString(body, 150)}
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: showAll
+                                            ? sanitizer(marked(body))
+                                            : clipLongString(
+                                                  sanitizer(marked(body)),
+                                                  150
+                                              ),
+                                    }}
+                                />
                             </span>
                         )
                     ) : null}

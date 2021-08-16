@@ -3,6 +3,8 @@ import { CommentTreeNode } from "../../types/types";
 import { getTimeToNow } from "../../utils/timeDiff";
 import CommentForm from "./CommentForm";
 import UpdatingCommentForm from "./UpdatingCommentForm";
+import marked from "marked";
+import dompurify from "dompurify";
 
 import { ArrowsAngleExpand } from "react-bootstrap-icons";
 import { useAppSelector } from "../../app/hooks";
@@ -38,6 +40,7 @@ export default function CommentCard({ comment }: Props): ReactElement {
 
     const username = useAppSelector(selectUsername);
     const isAuthor = comment.author.name === username;
+    const sanitizer = dompurify.sanitize;
 
     const handleDelete = async () => {
         const loadingToastId = toast.loading("等待中...");
@@ -102,7 +105,11 @@ export default function CommentCard({ comment }: Props): ReactElement {
                                 className="mb-4 mt-2 text-gray-800"
                                 style={{ whiteSpace: "pre-wrap" }}
                             >
-                                {comment.body}
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: sanitizer(marked(comment.body)),
+                                    }}
+                                />
                             </div>
 
                             <div className="mb-4 text-gray-500 text-xs flex gap-2">

@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import TextareaAutosize from "react-textarea-autosize";
 
 import SelectForumMenu from "./SelectForumMenu";
-
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
 import { useCreatePostMutation } from "../../app/services/post";
