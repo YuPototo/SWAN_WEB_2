@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { useGetPostQuery, useEditPostMutation } from "../../app/services/post";
 
@@ -67,16 +68,16 @@ function EditPost(): ReactElement {
                     <h1 className="text-lg">{title}</h1>
                 </div>
                 <div className="mb-4 flex items-center">
-                    <textarea
+                    <TextareaAutosize
                         className="text-input flex-grow"
-                        rows={3}
+                        minRows={3}
                         id="body"
                         name="body"
                         value={body}
                         placeholder="内容"
                         disabled={isUpdating}
                         onChange={(e) => setBody(e.target.value)}
-                    ></textarea>
+                    />
                 </div>
 
                 <div className="flex gap-2 justify-end mr-3">

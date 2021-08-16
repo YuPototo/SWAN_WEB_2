@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { useAddCommentMutation } from "../../app/services/comment";
 import toast from "react-hot-toast";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
@@ -71,13 +72,13 @@ export default function CommentBox({
 
     return (
         <div className="m-1">
-            <textarea
+            <TextareaAutosize
                 className="text-input w-full"
                 placeholder="说说你的想法"
-                rows={3}
+                minRows={3}
                 value={comment}
                 onChange={handleChange}
-            ></textarea>
+            />
             <div className="flex justify-end">
                 {isCommentReply ? (
                     <button

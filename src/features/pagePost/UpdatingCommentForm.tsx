@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import { useUpdateCommentMutation } from "../../app/services/comment";
 import toast from "react-hot-toast";
+import TextareaAutosize from "react-textarea-autosize";
 
 import { useAppSelector } from "../../app/hooks";
 import { selectIsAuthenticated } from "../auth/authSlice";
@@ -62,13 +63,13 @@ export default function CommentBox({ comment, onCancel }: Props): ReactElement {
 
     return (
         <div className="m-1">
-            <textarea
+            <TextareaAutosize
                 className="text-input w-full"
                 placeholder="说说你的想法"
                 rows={3}
                 value={commentBody}
                 onChange={handleChange}
-            ></textarea>
+            />
             <div className="flex justify-end">
                 <button
                     className="btn-sm btn-info--outline"

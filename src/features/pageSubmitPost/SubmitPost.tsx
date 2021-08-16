@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
+import TextareaAutosize from "react-textarea-autosize";
 
 import SelectForumMenu from "./SelectForumMenu";
 
@@ -108,7 +109,7 @@ function SubmitPost(): ReactElement {
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-2 flex-col gap-3 items-center">
-                        <textarea
+                        <TextareaAutosize
                             className="text-input w-full mb-2"
                             id="title"
                             name="title"
@@ -118,30 +119,30 @@ function SubmitPost(): ReactElement {
                             autoFocus
                             disabled={isLoading}
                             onChange={(e) => setTitle(e.target.value)}
-                        ></textarea>
+                        />
 
                         {postType === "URL" ? (
-                            <textarea
+                            <TextareaAutosize
                                 className="text-input w-full"
                                 id="body"
                                 name="body"
                                 value={body}
-                                rows={3}
+                                minRows={2}
                                 placeholder="URL"
                                 disabled={isLoading}
                                 onChange={(e) => setBody(e.target.value)}
-                            ></textarea>
+                            />
                         ) : (
-                            <textarea
+                            <TextareaAutosize
                                 className="text-input w-full"
                                 id="body"
                                 name="body"
                                 value={body}
-                                rows={3}
+                                minRows={3}
                                 placeholder="正文（选填）"
                                 disabled={isLoading}
                                 onChange={(e) => setBody(e.target.value)}
-                            ></textarea>
+                            />
                         )}
                     </div>
                     <div className="flex gap-2 justify-end mr-3">
