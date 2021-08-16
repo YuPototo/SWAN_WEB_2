@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 export default function About(): ReactElement {
     return (
@@ -13,16 +14,16 @@ export default function About(): ReactElement {
 
             <p className="m-3">
                 你可以在这个页面联系到我：
-                <a href="/qinyu" className="link">
+                <Link to="/qinyu" className="link">
                     联系开发者
-                </a>
+                </Link>
             </p>
 
             <p className="m-3">
                 你可以点击这里返回首页：
-                <a href="/" className="link">
+                <Link to="/" className="link">
                     返回首页
-                </a>
+                </Link>
             </p>
         </div>
     );

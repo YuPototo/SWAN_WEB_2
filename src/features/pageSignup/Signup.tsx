@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from "react";
 import toast from "react-hot-toast";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useSignupMutation } from "../../app/services/auth";
 import analytics from "../../analytics/analytics";
@@ -119,8 +120,8 @@ export default function Signup(): ReactElement {
                 </div>
                 <div className="my-2 text-gray-400 text-sm">
                     创建账号视为同意
-                    <a href="/privacy">《好西瓜隐私协议》</a> 和
-                    <a href="/userTerms">《好西瓜用户协议》</a>
+                    <Link to="/privacy">《好西瓜隐私协议》</Link> 和
+                    <Link to="/userTerms">《好西瓜用户协议》</Link>
                 </div>
                 <div>
                     已有账号？去

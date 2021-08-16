@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import toast from "react-hot-toast";
 import { selectIsAuthenticated } from "../auth/authSlice";
+import { Link } from "react-router-dom";
 
 import ListManager from "../listing/ListManager";
 import ForumRecommendation from "./ForumRecommendation";
@@ -43,10 +44,10 @@ export default function Home(): ReactElement {
                 <ListManager isLogin={isLogin} />
             </div>
             <div className="p-2 text-sm flex gap-3 justify-center pb-4 text-gray-600 md:bg-white md:col-start-2 md:row-start-2 md:rounded md:flex-col md:p-4">
-                <a href="/qinyu">联系开发者</a>
-                <a href="/about">关于好西瓜</a>
-                <a href="/privacy">隐私协议</a>
-                <a href="/userTerms">用户协议</a>
+                <Link to="/qinyu">联系开发者</Link>
+                <Link to="/about">关于好西瓜</Link>
+                <Link to="/privacy">隐私协议</Link>
+                <Link to="/userTerms">用户协议</Link>
             </div>
             <ForumRecommendation />
         </div>

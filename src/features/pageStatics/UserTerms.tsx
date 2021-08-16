@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+import { Link } from "react-router-dom";
 
 export default function About(): ReactElement {
     return (
@@ -28,9 +29,9 @@ export default function About(): ReactElement {
 
             <p className="mt-10">
                 你可以点击这里返回首页：
-                <a href="/" className="link">
+                <Link to="/" className="link">
                     返回首页
-                </a>
+                </Link>
             </p>
         </div>
     );

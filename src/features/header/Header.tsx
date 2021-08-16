@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-
+import { Link } from "react-router-dom";
 import {
     selectKarma,
     selectUsername,
@@ -15,10 +15,10 @@ function Brand(): ReactElement {
     const iconImage = "/watermelon.png";
 
     return (
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
             <img className="mr-2" src={iconImage} alt="brand icon" />
             <span className="text-gray-700 font-serif">好西瓜</span>
-        </a>
+        </Link>
     );
 }
 
