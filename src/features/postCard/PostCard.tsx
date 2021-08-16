@@ -103,13 +103,13 @@ const renderWithStyle = (showStyle: boolean) => {
 
 interface Props {
     showForumName: boolean;
-    showAll: boolean;
+    isInPostPage: boolean;
     post: Post;
 }
 
 export default function PostCard({
     post,
-    showAll,
+    isInPostPage,
     showForumName,
 }: Props): ReactElement {
     const {
@@ -216,6 +216,45 @@ export default function PostCard({
         }
     };
 
+    const clickTitle = () => {
+        if (isInPostPage) return;
+        history.push(`/post/${post.id}`);
+    };
+
+    const clickBody = () => {
+        if (isInPostPage) return;
+        history.push(`/post/${post.id}`);
+    };
+
+    const clickComment = () => {
+        if (isInPostPage) return;
+        history.push(`/post/${post.id}`);
+    };
+
+    const titleCss = () => {
+        const baseCss = "text-lg text-gray-900 mb-2";
+        if (isInPostPage) {
+            return baseCss;
+        }
+        return baseCss + " cursor-pointer";
+    };
+
+    const commentButtonCss = () => {
+        const baseCss = "text-sm p-1 text-gray-500 hover:text-blue-500";
+        if (isInPostPage) {
+            return baseCss + " cursor-default";
+        }
+        return baseCss;
+    };
+
+    const selfPostBodyCss = () => {
+        const baseCss = "text-sm text-gray-800 card-text";
+        if (isInPostPage) {
+            return baseCss;
+        }
+        return baseCss + " cursor-pointer";
+    };
+
     return (
         <div
             style={{
@@ -246,10 +285,7 @@ export default function PostCard({
                         {createdAt ? getTimeToNow(createdAt) : undefined}
                     </span>
                 </div>
-                <div
-                    className="text-lg text-gray-900 cursor-pointer mb-2"
-                    onClick={() => history.push(`/post/${post.id}`)}
-                >
+                <div className={titleCss()} onClick={clickTitle}>
                     {title}
                 </div>
                 <div className="my-2">
@@ -265,17 +301,19 @@ export default function PostCard({
                             </a>
                         ) : (
                             <span
-                                className="text-sm text-gray-800 card-text"
+                                className={selfPostBodyCss()}
                                 style={{
                                     wordWrap: "break-word",
-                                    //whiteSpace: showAll ? "pre-wrap" : "normal",
+                                    whiteSpace: isInPostPage
+                                        ? "pre-wrap"
+                                        : "normal",
                                 }}
-                                onClick={() => history.push(`/post/${post.id}`)}
+                                onClick={clickBody}
                             >
                                 <div
-                                    className={renderWithStyle(showAll)}
+                                    className={renderWithStyle(isInPostPage)}
                                     dangerouslySetInnerHTML={{
-                                        __html: showAll
+                                        __html: isInPostPage
                                             ? sanitizer(marked(body))
                                             : clipLongString(
                                                   sanitizer(marked(body)),
@@ -301,10 +339,7 @@ export default function PostCard({
                 />
             </div>
             <div className="flex gap-1 ml-1 pb-3 md:ml-0">
-                <button
-                    className="text-sm p-1 text-gray-500 hover:text-blue-500"
-                    onClick={() => history.push(`/post/${post.id}`)}
-                >
+                <button className={commentButtonCss()} onClick={clickComment}>
                     评论({post.commentCount})
                 </button>
                 <CopyToClipboard

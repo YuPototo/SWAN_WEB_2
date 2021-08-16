@@ -39,7 +39,11 @@ function Post(): ReactElement {
     return (
         <div className="mx-auto md:max-w-2xl">
             <div className="">
-                <PostCard post={post} showAll={true} showForumName={true} />
+                <PostCard
+                    post={post}
+                    isInPostPage={true}
+                    showForumName={true}
+                />
             </div>
             <div className="bg-white p-1 mt-2 rounded">
                 <CommentForm

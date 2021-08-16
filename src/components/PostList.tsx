@@ -20,7 +20,7 @@ export default function PostList({
                 >
                     <PostCard
                         post={post}
-                        showAll={false}
+                        isInPostPage={false}
                         showForumName={showForumName}
                     />
                 </div>
