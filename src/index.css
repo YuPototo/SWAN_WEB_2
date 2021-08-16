@@ -55,7 +55,14 @@
     margin: 0.5rem 0;
 }
 
+.render-html ul {
+    list-style-type: circle;
+}
+
+.render-html ol {
+    list-style-type: decimal;
+}
+
 .render-html li {
-    list-style-type: disc;
-    list-style: inside;
+    margin-left: 1rem;
 }
