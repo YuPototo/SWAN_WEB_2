@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { useHistory } from "react-router-dom";
@@ -6,7 +6,10 @@ import { useHistory } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import ForumListManager from "./ForumListManager";
-import { selectIsAuthenticated } from "../auth/authSlice";
+import {
+    selectIsAuthenticated,
+    selectHasFetchLocalToken,
+} from "../auth/authSlice";
 import {
     useGetForumInfoQuery,
     useJoinForumMutation,
@@ -23,14 +26,26 @@ export default function PageForum(): ReactElement {
     const forumId = parseInt(forumIdString);
 
     const isLogin = useAppSelector(selectIsAuthenticated);
+    const hasFetchLocalToken = useAppSelector(selectHasFetchLocalToken);
 
-    const { data: forumInfo, isLoading: isInfoLoading } =
-        useGetForumInfoQuery(forumId);
+    // skip: https://redux-toolkit.js.org/rtk-query/usage/conditional-fetching
+    const [skip, setSkip] = useState(true);
+    const { data: forumInfo, isLoading: isInfoLoading } = useGetForumInfoQuery(
+        forumId,
+        { skip }
+    );
 
     const [joinForum] = useJoinForumMutation();
     const [leaveForum] = useLeaveForumMutation();
 
     const history = useHistory();
+
+    useEffect(() => {
+        // 获取了本地 token 后，再去 fetch forum 信息
+        if (hasFetchLocalToken) {
+            setSkip(false);
+        }
+    }, [hasFetchLocalToken]);
 
     const handleJoinForum = async () => {
         if (!isLogin) {

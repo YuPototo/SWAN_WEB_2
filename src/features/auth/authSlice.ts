@@ -10,12 +10,14 @@ interface AuthState {
     user: null | UserState;
     token: string | null;
     isAuthenticated: boolean;
+    hasFetchLocalToken: boolean; // 是否已经从 localStorage 获取用户信息
 }
 
 const initialState: AuthState = {
     user: null,
     token: null,
     isAuthenticated: false,
+    hasFetchLocalToken: false,
 };
 
 const slice = createSlice({
@@ -23,6 +25,9 @@ const slice = createSlice({
     initialState,
     reducers: {
         logout: () => initialState,
+        setHasFetchLocalToken: (state) => {
+            state.hasFetchLocalToken = true;
+        },
         setUserStorage: (
             state,
             action: PayloadAction<{ user: { username: string }; token: string }>
@@ -59,7 +64,7 @@ const slice = createSlice({
     },
 });
 
-export const { logout, setUserStorage } = slice.actions;
+export const { logout, setUserStorage, setHasFetchLocalToken } = slice.actions;
 export default slice.reducer;
 
 export const selectIsAuthenticated = (state: RootState) =>
@@ -67,3 +72,5 @@ export const selectIsAuthenticated = (state: RootState) =>
 export const selectUsername = (state: RootState) => state.auth.user?.username;
 export const selectKarma = (state: RootState) => state.auth.user?.karma;
 export const selectUserId = (state: RootState) => state.auth.user?.id;
+export const selectHasFetchLocalToken = (state: RootState) =>
+    state.auth.hasFetchLocalToken;

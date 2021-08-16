@@ -3,7 +3,10 @@ import { BrowserRouter, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch } from "./app/hooks";
 
-import { setUserStorage } from "./features/auth/authSlice";
+import {
+    setUserStorage,
+    setHasFetchLocalToken,
+} from "./features/auth/authSlice";
 
 import Routes from "./features/routes/Routes";
 import Header from "./features/header/Header";
@@ -26,13 +29,14 @@ export default function App() {
     useEffect(() => {
         const userStorage = localStorage.getItem("user");
         if (!userStorage) {
+            dispatch(setHasFetchLocalToken());
             return;
         }
         const userInfo = JSON.parse(userStorage);
         if (userInfo.user.username && userInfo.token) {
             dispatch(setUserStorage(userInfo));
+            dispatch(setHasFetchLocalToken());
         }
-        console.log("设置完成本地信息后");
         const result = dispatch(authApi.endpoints.getUserInfo.initiate());
         return result.unsubscribe;
     }, [dispatch]);
