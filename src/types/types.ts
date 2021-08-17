@@ -18,6 +18,7 @@ export interface Post {
     score: number;
     commentCount: number;
     postType: POST_TYPE;
+    isPinned: boolean;
     author: Author;
     forum: Forum;
 }

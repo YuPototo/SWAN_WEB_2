@@ -5,6 +5,7 @@ import {
     CaretUpFill,
     CaretDown,
     CaretDownFill,
+    PinAngleFill,
 } from "react-bootstrap-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import marked from "marked";
@@ -301,6 +302,11 @@ export default function PostCard({
                     <span className="text-xs text-gray-500">
                         {createdAt ? getTimeToNow(createdAt) : undefined}
                     </span>
+                    {post.isPinned ? (
+                        <span className="ml-auto">
+                            <PinAngleFill size={20} className="text-blue-500" />
+                        </span>
+                    ) : null}
                 </div>
                 <div className={titleCss()} onClick={clickTitle}>
                     {title}
