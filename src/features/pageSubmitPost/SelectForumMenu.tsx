@@ -11,6 +11,7 @@ function classNames(...classes: string[]) {
 interface Forum {
     id: number;
     name: string;
+    icon: string;
 }
 
 interface Props {
@@ -34,11 +35,11 @@ export default function SelectForumMenu({
                 <>
                     <Listbox.Button className="relative w-full bg-white rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 text-gray-700 focus:ring-blue-400 focus:border-blue-400 sm:text-sm ">
                         <span className="flex items-center">
-                            {/* <img
-                                    src={selected.avatar}
-                                    alt=""
-                                    className="flex-shrink-0 h-6 w-6 rounded-full"
-                                /> */}
+                            <img
+                                src={selectedForum.icon}
+                                alt=""
+                                className="flex-shrink-0 h-6 w-6 rounded-full"
+                            />
                             <span className="ml-3 block truncate">
                                 {selectedForum.name} 社区
                             </span>
@@ -75,11 +76,11 @@ export default function SelectForumMenu({
                                     {({ selected, active }) => (
                                         <>
                                             <div className="flex items-center">
-                                                {/* <img
-                                                    src={person.avatar}
+                                                <img
+                                                    src={forum.icon}
                                                     alt=""
                                                     className="flex-shrink-0 h-6 w-6 rounded-full"
-                                                /> */}
+                                                />
                                                 <span
                                                     className={classNames(
                                                         selected

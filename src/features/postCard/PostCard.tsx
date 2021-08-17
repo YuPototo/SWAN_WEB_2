@@ -31,6 +31,16 @@ import { Post } from "../../types/types";
 import toast from "react-hot-toast";
 import analytics from "../../analytics/analytics";
 
+import { forums } from "../../data/forums";
+
+const getForumIcon = (forumId: number) => {
+    const forum = forums.find((forum) => forum.id === forumId);
+    if (!forum) {
+        return "";
+    }
+    return forum.icon;
+};
+
 type VoteDirection = 1 | -1;
 
 const getScoreClass = (
@@ -264,13 +274,20 @@ export default function PostCard({
             className="grid gap-1 bg-white rounded"
         >
             <div className="col-span-2 pt-3 px-4  md:col-span-1 md:px-1">
-                <div className="mb-1.5">
+                <div className="mb-1.5 flex items-center gap-1.5">
                     {showForumName ? (
                         <span
-                            className="text-xs mr-1 text-gray-800 cursor-pointer"
+                            className="flex items-center cursor-pointer gap-1"
                             onClick={() => history.push(`/f/${post.forum.id}`)}
                         >
-                            {post.forum.name}
+                            <img
+                                src={getForumIcon(post.forum.id)}
+                                alt=""
+                                className="inline flex-shrink-0 h-6 w-6 rounded-full"
+                            />
+                            <span className="text-xs text-gray-800">
+                                {post.forum.name}
+                            </span>
                         </span>
                     ) : null}
                     <span

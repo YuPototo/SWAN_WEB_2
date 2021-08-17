@@ -10,17 +10,7 @@ import { useCreatePostMutation } from "../../app/services/post";
 import PostTypePicker, { PostType } from "./PostTypePicker";
 
 import analytics from "../../analytics/analytics";
-
-const forums = [
-    {
-        id: 1,
-        name: "新闻",
-    },
-    {
-        id: 2,
-        name: "Python",
-    },
-];
+import { forums } from "../../data/forums";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);

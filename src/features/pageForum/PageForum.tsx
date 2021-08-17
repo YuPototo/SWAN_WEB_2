@@ -15,11 +15,15 @@ import {
     useJoinForumMutation,
     useLeaveForumMutation,
 } from "../../app/services/forum";
+import { forums } from "../../data/forums";
 
-/*
-bug：如果直接从浏览器进入某个社区，不会获取到正确的加入信息。
-原因： 
-*/
+const getForumIcon = (forumId: number | undefined) => {
+    const forum = forums.find((forum) => forum.id === forumId);
+    if (!forum) {
+        return "";
+    }
+    return forum.icon;
+};
 
 export default function PageForum(): ReactElement {
     const { forumId: forumIdString } = useParams<{ forumId: string }>();
@@ -101,6 +105,13 @@ export default function PageForum(): ReactElement {
             }}
         >
             <div className="flex flex-col items-center bg-white my-2 py-3 rounded md:flex-row md:pl-5 md:py-5">
+                <div className="md:mr-2">
+                    <img
+                        src={getForumIcon(forumInfo?.forum.id)}
+                        alt="icon"
+                        className="inline flex-shrink-0 h-12 w-12 rounded-full"
+                    />
+                </div>
                 <h1 className="text-xl text-gray-700 mb-3 md:inline md:mb-0">
                     {isInfoLoading ? "社区" : forumInfo?.forum.name + " 社区"}
                 </h1>
