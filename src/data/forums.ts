@@ -9,4 +9,9 @@ export const forums = [
         name: "Python",
         icon: "https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/267_Python_logo-128.png",
     },
+    {
+        id: 4,
+        name: "段子",
+        icon: "https://emoji.emojipic.cn/pic/160/facebook/face-with-stuck-out-tongue-and-tightly-closed-eyes_1f61d.png",
+    },
 ];

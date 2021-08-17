@@ -11,6 +11,18 @@ export default function NoForumHint(): ReactElement {
             <p className="text-sm">推荐本站的活跃社区</p>
             <ul className="ml-3 mt-3">
                 <li className="mb-2">
+                    <Link to="/f/4" className="flex gap-2 items-center link">
+                        <div className="md:mr-2">
+                            <img
+                                src={forums[2].icon}
+                                alt="icon"
+                                className="inline flex-shrink-0 h-7 w-7 rounded-full"
+                            />
+                        </div>
+                        段子
+                    </Link>
+                </li>
+                <li className="mb-2">
                     <Link to="/f/1" className="flex gap-2 items-center link">
                         <div className="md:mr-2">
                             <img

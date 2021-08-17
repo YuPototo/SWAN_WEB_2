@@ -303,7 +303,7 @@ export default function PostCard({
                         {createdAt ? getTimeToNow(createdAt) : undefined}
                     </span>
                     {post.isPinned ? (
-                        <span className="ml-auto">
+                        <span className="ml-auto mr-1">
                             <PinAngleFill size={20} className="text-blue-500" />
                         </span>
                     ) : null}
