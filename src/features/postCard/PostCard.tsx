@@ -33,6 +33,12 @@ import toast from "react-hot-toast";
 import analytics from "../../analytics/analytics";
 
 import { forums } from "../../data/forums";
+import { avatars } from "../../data/avatars";
+
+const getAvatars = (userId: number) => {
+    const mod = userId % avatars.length;
+    return avatars[mod].url;
+};
 
 const getForumIcon = (forumId: number) => {
     const forum = forums.find((forum) => forum.id === forumId);
@@ -283,7 +289,7 @@ export default function PostCard({
                         >
                             <img
                                 src={getForumIcon(post.forum.id)}
-                                alt=""
+                                alt="icon"
                                 className="inline flex-shrink-0 h-6 w-6 rounded-full"
                             />
                             <span className="text-xs text-gray-800">
@@ -291,13 +297,17 @@ export default function PostCard({
                             </span>
                         </span>
                     ) : null}
-                    <span
-                        className="mr-1 text-xs text-gray-500"
-                        // onClick={() =>
-                        //     history.push(`/profile/${post.author.id}`)
-                        // }
-                    >
-                        {authorName}
+                    <span className="mr-1 flex gap-1 items-center">
+                        {showForumName ? null : (
+                            <img
+                                src={getAvatars(post.author.id)}
+                                alt="avatars"
+                                className="inline flex-shrink-0 h-7 w-7 rounded-full"
+                            />
+                        )}
+                        <span className="text-xs text-gray-500">
+                            {authorName}
+                        </span>
                     </span>
                     <span className="text-xs text-gray-500">
                         {createdAt ? getTimeToNow(createdAt) : undefined}

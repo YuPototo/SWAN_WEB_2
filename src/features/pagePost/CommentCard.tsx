@@ -11,15 +11,26 @@ import { useAppSelector } from "../../app/hooks";
 import { selectUsername } from "../../features/auth/authSlice";
 import { useDeleteCommentMutation } from "../../app/services/comment";
 import toast from "react-hot-toast";
+import { avatars } from "../../data/avatars";
 
+const getAvatars = (userId: number) => {
+    const mod = userId % avatars.length;
+    return avatars[mod].url;
+};
 interface UserNameProps {
+    authorId: number;
     authorName: string;
     createdAt: string;
 }
 
-const UserInfo = ({ authorName, createdAt }: UserNameProps) => {
+const UserInfo = ({ authorId, authorName, createdAt }: UserNameProps) => {
     return (
-        <div className="mb-1 flex content-center">
+        <div className="mb-1 flex gap-1.5 items-center">
+            <img
+                src={getAvatars(authorId)}
+                alt="avatars"
+                className="inline flex-shrink-0 h-7 w-7 rounded-full"
+            />
             <span className="text-sm text-gray-800 mr-2">{authorName}</span>
             <span className="text-xs text-gray-400">
                 {getTimeToNow(createdAt)}
@@ -68,6 +79,7 @@ export default function CommentCard({ comment }: Props): ReactElement {
                 />
 
                 <UserInfo
+                    authorId={comment.author.id}
                     authorName={comment.author.name}
                     createdAt={comment.createdAt}
                 />
@@ -78,6 +90,7 @@ export default function CommentCard({ comment }: Props): ReactElement {
     return (
         <div className="mt-2 w-full">
             <UserInfo
+                authorId={comment.author.id}
                 authorName={comment.author.name}
                 createdAt={comment.createdAt}
             />
