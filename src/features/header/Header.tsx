@@ -3,13 +3,10 @@ import { useHistory } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { Link } from "react-router-dom";
 import {
-    selectKarma,
+    //selectKarma,
     selectUsername,
     selectIsAuthenticated,
-    logout,
 } from "../auth/authSlice";
-import toast from "react-hot-toast";
-import analytics from "../../analytics/analytics";
 
 function Brand(): ReactElement {
     const iconImage = "/watermelon.png";
@@ -24,18 +21,10 @@ function Brand(): ReactElement {
 
 export default function Header(): ReactElement {
     const history = useHistory();
-    const dispatch = useAppDispatch();
 
     const isLogin = useAppSelector(selectIsAuthenticated);
     const username = useAppSelector(selectUsername);
-    const karma = useAppSelector(selectKarma);
-
-    const handleLogout = () => {
-        localStorage.removeItem("user");
-        dispatch(logout());
-        analytics.sendEvent({ category: "user", action: "logout" });
-        toast.success("已登出");
-    };
+    // const karma = useAppSelector(selectKarma);
 
     return (
         <div className="flex px-1 h-12">
@@ -47,18 +36,12 @@ export default function Header(): ReactElement {
                 {isLogin ? (
                     <>
                         <span
-                            className="text-sm text-gray-700 cursor-pointer"
+                            className="text-sm mr-2 text-gray-700 cursor-pointer"
                             onClick={() => history.push(`/profile`)}
                         >
                             {username}
                         </span>
-                        <span className="text-sm text-gray-700">({karma})</span>
-                        <button
-                            className="btn-sm btn-info--outline"
-                            onClick={handleLogout}
-                        >
-                            登出
-                        </button>
+                        {/* <span className="text-sm text-gray-700">({karma})</span> */}
                     </>
                 ) : (
                     <>

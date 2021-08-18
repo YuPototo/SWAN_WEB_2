@@ -42,7 +42,11 @@ export default function ListAllHot({
 
     return (
         <>
-            <PostList posts={posts} showForumName={false} />
+            <PostList
+                posts={posts}
+                showForumName={false}
+                cardPosition="forum"
+            />
         </>
     );
 }

@@ -38,7 +38,7 @@ export default function ListUserNew({ currentPage }: Props): ReactElement {
     }
     return (
         <>
-            <PostList posts={posts} showForumName={true} />
+            <PostList posts={posts} showForumName={true} cardPosition="home" />
         </>
     );
 }

@@ -6,6 +6,7 @@ import {
     CaretDown,
     CaretDownFill,
     PinAngleFill,
+    Share,
 } from "react-bootstrap-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import marked from "marked";
@@ -118,17 +119,14 @@ const renderWithStyle = (showStyle: boolean) => {
     return "";
 };
 
+export type CardPosition = "home" | "forum" | "postPage" | "profile";
+
 interface Props {
-    showForumName: boolean;
-    isInPostPage: boolean;
+    cardPosition: CardPosition;
     post: Post;
 }
 
-export default function PostCard({
-    post,
-    isInPostPage,
-    showForumName,
-}: Props): ReactElement {
+export default function PostCard({ post, cardPosition }: Props): ReactElement {
     const {
         id: postId,
         title,
@@ -156,6 +154,8 @@ export default function PostCard({
     const sanitizer = dompurify.sanitize;
 
     const [tempScore, setTempScore] = useState(score); // 这个处理本地 score 的方法不完美，以后再改
+
+    const showForumName = cardPosition === "home" || cardPosition === "profile";
 
     const handleDelete = async () => {
         const loadingToastId = toast.loading("等待中...");
@@ -234,31 +234,32 @@ export default function PostCard({
     };
 
     const clickTitle = () => {
-        if (isInPostPage) return;
+        if (cardPosition === "postPage") return;
         history.push(`/post/${post.id}`);
     };
 
     const clickBody = () => {
-        if (isInPostPage) return;
+        if (cardPosition === "postPage") return;
         history.push(`/post/${post.id}`);
     };
 
     const clickComment = () => {
-        if (isInPostPage) return;
+        if (cardPosition === "postPage") return;
         history.push(`/post/${post.id}`);
     };
 
     const titleCss = () => {
         const baseCss = "text-lg text-gray-900 mb-2";
-        if (isInPostPage) {
+        if (cardPosition === "postPage") {
             return baseCss;
         }
         return baseCss + " cursor-pointer";
     };
 
     const commentButtonCss = () => {
-        const baseCss = "text-sm p-1 text-gray-500 hover:text-blue-500";
-        if (isInPostPage) {
+        const baseCss =
+            "flex items-center text-sm p-1 text-gray-500 hover:text-blue-500";
+        if (cardPosition === "postPage") {
             return baseCss + " cursor-default";
         }
         return baseCss;
@@ -266,7 +267,7 @@ export default function PostCard({
 
     const selfPostBodyCss = () => {
         const baseCss = "text-sm text-gray-800 card-text";
-        if (isInPostPage) {
+        if (cardPosition === "postPage") {
             return baseCss;
         }
         return baseCss + " cursor-pointer";
@@ -297,21 +298,27 @@ export default function PostCard({
                             </span>
                         </span>
                     ) : null}
-                    <span className="mr-1 flex gap-1 items-center">
-                        {showForumName ? null : (
-                            <img
-                                src={getAvatars(post.author.id)}
-                                alt="avatars"
-                                className="inline flex-shrink-0 h-7 w-7 rounded-full"
-                            />
-                        )}
-                        <span className="text-xs text-gray-500">
-                            {authorName}
-                        </span>
-                    </span>
-                    <span className="text-xs text-gray-500">
-                        {createdAt ? getTimeToNow(createdAt) : undefined}
-                    </span>
+                    {showForumName ? null : (
+                        <>
+                            <span className="mr-1 flex gap-1 items-center">
+                                <img
+                                    src={getAvatars(post.author.id)}
+                                    alt="avatars"
+                                    className="inline flex-shrink-0 h-7 w-7 rounded-full"
+                                />
+                                <span className="text-xs text-gray-500">
+                                    {authorName}
+                                </span>
+                            </span>
+                            {cardPosition === "forum" ? null : (
+                                <span className="text-xs text-gray-500">
+                                    {createdAt
+                                        ? getTimeToNow(createdAt)
+                                        : undefined}
+                                </span>
+                            )}
+                        </>
+                    )}
                     {post.isPinned ? (
                         <span className="ml-auto mr-1">
                             <PinAngleFill size={20} className="text-blue-500" />
@@ -337,21 +344,25 @@ export default function PostCard({
                                 className={selfPostBodyCss()}
                                 style={{
                                     wordWrap: "break-word",
-                                    whiteSpace: isInPostPage
-                                        ? "pre-wrap"
-                                        : "normal",
+                                    whiteSpace:
+                                        cardPosition === "postPage"
+                                            ? "pre-wrap"
+                                            : "normal",
                                 }}
                                 onClick={clickBody}
                             >
                                 <div
-                                    className={renderWithStyle(isInPostPage)}
+                                    className={renderWithStyle(
+                                        cardPosition === "postPage"
+                                    )}
                                     dangerouslySetInnerHTML={{
-                                        __html: isInPostPage
-                                            ? sanitizer(marked(body))
-                                            : clipLongString(
-                                                  sanitizer(marked(body)),
-                                                  150
-                                              ),
+                                        __html:
+                                            cardPosition === "postPage"
+                                                ? sanitizer(marked(body))
+                                                : clipLongString(
+                                                      sanitizer(marked(body)),
+                                                      150
+                                                  ),
                                     }}
                                 />
                             </span>
@@ -372,17 +383,24 @@ export default function PostCard({
                 />
             </div>
             <div className="flex gap-1 ml-1 pb-3 md:ml-0">
-                <button className={commentButtonCss()} onClick={clickComment}>
-                    评论({post.commentCount})
-                </button>
-                <CopyToClipboard
-                    text={`http://haoxigua.top/post/${post.id}`} // 技术债啊
-                    onCopy={() => toast.success("已复制文章链接")}
-                >
-                    <button className="text-sm p-1 text-gray-500 hover:text-blue-500">
-                        分享
+                {/* {cardPosition === "postPage" ? null : (
+                    <button
+                        className={commentButtonCss()}
+                        onClick={clickComment}
+                    >
+                        <ChatLeft size={20} />
                     </button>
-                </CopyToClipboard>
+                )} */}
+                {cardPosition === "postPage" ? (
+                    <CopyToClipboard
+                        text={`http://haoxigua.top/post/${post.id}`} // 技术债啊
+                        onCopy={() => toast.success("已复制文章链接")}
+                    >
+                        <button className="text-sm p-1 mr-2 text-gray-500 hover:text-blue-500">
+                            <Share size={20} />
+                        </button>
+                    </CopyToClipboard>
+                ) : null}
 
                 {isAuthor ? (
                     <>
