@@ -1,5 +1,10 @@
 import { ReactElement } from "react";
-import { HandThumbsUp, LightningCharge } from "react-bootstrap-icons";
+import {
+    HandThumbsUp,
+    HandThumbsUpFill,
+    LightningChargeFill,
+    LightningCharge,
+} from "react-bootstrap-icons";
 
 export type RankMethod = "hot" | "new";
 
@@ -14,19 +19,34 @@ export default function RankMethodPicker({
     onChangeMethod,
 }: Props): ReactElement {
     const commonCss =
-        "pb-1.5 px-0.5 mx-2 hover:text-blue-500 flex items-center";
-    const selectedClass = "border-b-2 border-blue-500 text-blue-500";
-    const notSelectedClass = "border-b-2 border-white text-gray-500";
+        "flex items-center px-1.5 py-0.5 mx-2 rounded-full border border-white hover:text-green-500 hover:bg-green-50 hover:border-green-50";
+    const selectedClass =
+        "text-green-500 border-green-50 bg-green-50 font-medium";
+    const notSelectedClass = "text-gray-500";
 
     const hotCssClass =
         rankMethod === "hot"
             ? selectedClass + " " + commonCss
             : notSelectedClass + " " + commonCss;
 
+    const hotIcon =
+        rankMethod === "hot" ? (
+            <HandThumbsUpFill className="icon text-green-400" />
+        ) : (
+            <HandThumbsUp className="icon " />
+        );
+
     const newCssClass =
         rankMethod === "new"
             ? selectedClass + " " + commonCss
             : notSelectedClass + " " + commonCss;
+
+    const newIcon =
+        rankMethod === "new" ? (
+            <LightningChargeFill className="icon text-green-400" />
+        ) : (
+            <LightningCharge className="icon" />
+        );
 
     return (
         <div className="ml-3 flex gap-2">
@@ -34,13 +54,14 @@ export default function RankMethodPicker({
                 className={hotCssClass}
                 onClick={() => onChangeMethod("hot")}
             >
-                <HandThumbsUp size={20} /> <span className="ml-1">热门</span>
+                {hotIcon} <span className="ml-1">热门</span>
             </button>
             <button
                 className={newCssClass}
                 onClick={() => onChangeMethod("new")}
             >
-                <LightningCharge size={20} /> <span className="ml-1">最新</span>
+                {newIcon}
+                <span className="ml-1">最新</span>
             </button>
         </div>
     );

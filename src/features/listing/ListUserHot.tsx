@@ -34,8 +34,12 @@ export default function ListUserHot({ currentPage }: Props): ReactElement {
         return <div>No Post?</div>;
     }
 
-    if (posts.length === 0) {
+    if (currentPage === 0 && posts.length === 0) {
         return <NoForumHint />;
+    }
+
+    if (posts.length === 0) {
+        return <div>暂无内容</div>;
     }
 
     return (

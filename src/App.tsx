@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, useLocation } from "react-router-dom";
+import { BrowserRouter, useLocation, Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch } from "./app/hooks";
 
@@ -49,7 +49,7 @@ export default function App() {
                 <ScrollToTop />
 
                 <Header />
-                <div className="min-h-screen bg-gray-200 pt-2">
+                <div className="min-h-screen bg-gray-200 pt-5">
                     <div className="max-w-4xl mx-auto">
                         <Routes />
                     </div>

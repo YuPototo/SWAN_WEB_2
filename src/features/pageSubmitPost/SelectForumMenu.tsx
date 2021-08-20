@@ -33,7 +33,7 @@ export default function SelectForumMenu({
         <Listbox value={selectedForum} onChange={handleChange}>
             {({ open }) => (
                 <>
-                    <Listbox.Button className="relative w-full bg-white rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 text-gray-700 focus:ring-blue-400 focus:border-blue-400 sm:text-sm ">
+                    <Listbox.Button className="relative w-full bg-white rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 text-gray-600 focus:ring-gray-300 focus:border-gray-300 sm:text-sm ">
                         <span className="flex items-center">
                             <img
                                 src={selectedForum.icon}
@@ -46,7 +46,7 @@ export default function SelectForumMenu({
                         </span>
                         <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                             <SelectorIcon
-                                className="h-5 w-5 text-gray-400"
+                                className="h-5 w-5 text-green-400"
                                 aria-hidden="true"
                             />
                         </span>
@@ -66,7 +66,7 @@ export default function SelectForumMenu({
                                     className={({ active }) =>
                                         classNames(
                                             active
-                                                ? "text-white bg-blue-200"
+                                                ? "text-white bg-green-50"
                                                 : "text-gray-800",
                                             "cursor-default select-none relative py-2 pl-3 pr-9"
                                         )
@@ -98,7 +98,7 @@ export default function SelectForumMenu({
                                                     className={classNames(
                                                         active
                                                             ? "text-white"
-                                                            : "text-blue-600",
+                                                            : "text-green-500",
                                                         "absolute inset-y-0 right-0 flex items-center pr-4"
                                                     )}
                                                 >

@@ -12,10 +12,10 @@ export default function Pager({
     onChangePage,
 }: Props): ReactElement {
     return (
-        <div className="flex gap-2 justify-between mx-2">
+        <div className="flex gap-2 justify-between mx-4">
             {hasLastPage ? (
                 <button
-                    className="btn btn-primay--outline"
+                    className="btn btn-primary--outline"
                     onClick={() => onChangePage(-1)}
                 >
                     上一页

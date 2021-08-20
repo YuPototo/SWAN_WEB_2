@@ -41,7 +41,7 @@ function Post(): ReactElement {
             <div className="">
                 <PostCard post={post} cardPosition="postPage" />
             </div>
-            <div className="bg-white p-1 mt-2 rounded">
+            <div className="bg-white p-3 mt-3 rounded">
                 <CommentForm
                     postId={post.id}
                     onCancel={() => console.log("不需要")}

@@ -1,11 +1,11 @@
 import { ReactElement, useState } from "react";
 
 import {
-    CaretUp,
-    CaretUpFill,
-    CaretDown,
-    CaretDownFill,
     PinAngleFill,
+    HandThumbsUpFill,
+    HandThumbsUp,
+    HandThumbsDownFill,
+    HandThumbsDown,
     Share,
 } from "react-bootstrap-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -56,11 +56,11 @@ const getScoreClass = (
     voteDirection?: VoteDirection
 ): string => {
     if (voteDirection === 1 || isAuthor) {
-        return "text-red-500 mx-1";
+        return "text-green-600 text-sm mx-1";
     } else if (voteDirection === -1) {
-        return "text-blue-500 mx-1";
+        return "text-green-600 text-sm mx-1";
     }
-    return "text-gray-600 mx-1";
+    return "text-green-600 text-sm mx-1";
 };
 
 interface VoteButtonProps {
@@ -71,19 +71,21 @@ interface VoteButtonProps {
 const DownvoteButton = ({ voteDirection, onClick }: VoteButtonProps) => {
     if (voteDirection === -1) {
         return (
-            <CaretDownFill
-                size={30}
-                className="text-blue-500 cursor-pointer"
-                onClick={() => onClick()}
-            />
+            <div className="p-1 cursor-pointer" onClick={onClick}>
+                <HandThumbsDownFill
+                    className="icon text-green-500"
+                    onClick={() => onClick()}
+                />
+            </div>
         );
     } else {
         return (
-            <CaretDown
-                size={30}
-                className="text-gray-400 hover:text-blue-500 cursor-pointer"
-                onClick={() => onClick()}
-            />
+            <div className="p-1 cursor-pointer" onClick={onClick}>
+                <HandThumbsDown
+                    className="icon text-green-600 hover:text-green-700"
+                    onClick={() => onClick()}
+                />
+            </div>
         );
     }
 };
@@ -95,19 +97,15 @@ const UpvoteButton = ({
 }: VoteButtonProps & { isAuthor: boolean }) => {
     if (voteDirection === 1 || isAuthor) {
         return (
-            <CaretUpFill
-                size={30}
-                className=" text-red-500 cursor-pointer"
-                onClick={onClick}
-            />
+            <div className="p-1 cursor-pointer" onClick={onClick}>
+                <HandThumbsUpFill className="icon text-green-500 " />
+            </div>
         );
     } else {
         return (
-            <CaretUp
-                size={30}
-                className=" text-gray-400 hover:text-red-500 cursor-pointer"
-                onClick={onClick}
-            />
+            <div className="p-1 cursor-pointer" onClick={onClick}>
+                <HandThumbsUp className="icon text-green-600 hover:text-green-700" />
+            </div>
         );
     }
 };
@@ -156,6 +154,7 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
     const [tempScore, setTempScore] = useState(score); // 这个处理本地 score 的方法不完美，以后再改
 
     const showForumName = cardPosition === "home" || cardPosition === "profile";
+    const isInForumPage = cardPosition === "forum";
 
     const handleDelete = async () => {
         const loadingToastId = toast.loading("等待中...");
@@ -243,30 +242,16 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
         history.push(`/post/${post.id}`);
     };
 
-    const clickComment = () => {
-        if (cardPosition === "postPage") return;
-        history.push(`/post/${post.id}`);
-    };
-
     const titleCss = () => {
-        const baseCss = "text-lg text-gray-900 mb-2";
+        const baseCss = "text-lg text-gray-900 my-2.5";
         if (cardPosition === "postPage") {
             return baseCss;
         }
         return baseCss + " cursor-pointer";
     };
 
-    const commentButtonCss = () => {
-        const baseCss =
-            "flex items-center text-sm p-1 text-gray-500 hover:text-blue-500";
-        if (cardPosition === "postPage") {
-            return baseCss + " cursor-default";
-        }
-        return baseCss;
-    };
-
     const selfPostBodyCss = () => {
-        const baseCss = "text-sm text-gray-800 card-text";
+        const baseCss = "text-sm text-gray-700 card-text";
         if (cardPosition === "postPage") {
             return baseCss;
         }
@@ -274,14 +259,8 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
     };
 
     return (
-        <div
-            style={{
-                gridTemplateRows: "1fr auto",
-                gridTemplateColumns: "1fr minmax(0, 100%)",
-            }}
-            className="grid gap-1 bg-white rounded"
-        >
-            <div className="col-span-2 pt-3 px-4  md:col-span-1 md:px-1">
+        <div className="bg-white rounded px-2">
+            <div className="col-span-2 pt-3 px-4">
                 <div className="mb-1.5 flex items-center gap-1.5">
                     {showForumName ? (
                         <span
@@ -293,7 +272,7 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                                 alt="icon"
                                 className="inline flex-shrink-0 h-6 w-6 rounded-full"
                             />
-                            <span className="text-xs text-gray-800">
+                            <span className="text-xs text-gray-500">
                                 {post.forum.name}
                             </span>
                         </span>
@@ -319,16 +298,19 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                             )}
                         </>
                     )}
-                    {post.isPinned ? (
+                    {isInForumPage && post.isPinned ? (
                         <span className="ml-auto mr-1">
-                            <PinAngleFill size={20} className="text-blue-500" />
+                            <PinAngleFill
+                                size={20}
+                                className="text-green-500"
+                            />
                         </span>
                     ) : null}
                 </div>
                 <div className={titleCss()} onClick={clickTitle}>
                     {title}
                 </div>
-                <div className="my-2">
+                <div className="mb-5">
                     {body ? (
                         postType === "URL" ? (
                             <a
@@ -370,19 +352,8 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                     ) : null}
                 </div>
             </div>
-            <div className="flex content-center pl-4 pr-2 md:px-1 md:pt-1 md:col-start-1 md:row-start-1 md:row-span-2 md:items-center md:flex-col md:mr-1 md:bg-gray-50">
-                <UpvoteButton
-                    voteDirection={userVote}
-                    isAuthor={isAuthor}
-                    onClick={() => clickVote(1, userVote)}
-                />
-                <div className={scoreClass}>{tempScore}</div>
-                <DownvoteButton
-                    voteDirection={userVote}
-                    onClick={() => clickVote(-1, userVote)}
-                />
-            </div>
-            <div className="flex gap-1 ml-1 pb-3 md:ml-0">
+
+            <div className="flex gap-1 ml-4 pb-3">
                 {/* {cardPosition === "postPage" ? null : (
                     <button
                         className={commentButtonCss()}
@@ -391,13 +362,27 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                         <ChatLeft size={20} />
                     </button>
                 )} */}
+                <div className="flex items-center border  rounded-full px-2 mr-2">
+                    <UpvoteButton
+                        voteDirection={userVote}
+                        isAuthor={isAuthor}
+                        onClick={() => clickVote(1, userVote)}
+                    />
+                    <div className={scoreClass}>{tempScore}</div>
+                    <DownvoteButton
+                        voteDirection={userVote}
+                        onClick={() => clickVote(-1, userVote)}
+                    />
+                </div>
+
                 {cardPosition === "postPage" ? (
                     <CopyToClipboard
                         text={`http://haoxigua.top/post/${post.id}`} // 技术债啊
                         onCopy={() => toast.success("已复制文章链接")}
                     >
-                        <button className="text-sm p-1 mr-2 text-gray-500 hover:text-blue-500">
-                            <Share size={20} />
+                        <button className="text-sm p-1 mr-2 flex items-center gap-1 text-gray-500">
+                            <Share className="icon-sm text-gray-500 hover:text-gray-600" />
+                            <span>分享</span>
                         </button>
                     </CopyToClipboard>
                 ) : null}
@@ -406,7 +391,7 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                     <>
                         {postType === "SELF_POST" ? (
                             <button
-                                className="text-sm p-1 text-gray-500 hover:text-blue-500"
+                                className="text-sm p-1 text-gray-500 hover:text-gray-500"
                                 onClick={() =>
                                     history.push(`/editPost/${postId}`)
                                 }
@@ -416,7 +401,7 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                         ) : null}
 
                         <button
-                            className="text-sm p-1 text-gray-500 hover:text-blue-500"
+                            className="text-sm p-1 text-gray-500 hover:text-gray-500"
                             onClick={handleDelete}
                         >
                             删除

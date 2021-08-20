@@ -79,7 +79,7 @@ export default function CommentBox({
                 value={comment}
                 onChange={handleChange}
             />
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-2">
                 {isCommentReply ? (
                     <button
                         className="btn-sm btn-info--outline"

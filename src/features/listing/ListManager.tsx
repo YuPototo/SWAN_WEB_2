@@ -56,7 +56,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
 
     return (
         <>
-            <div className="bg-white p-2 rounded">
+            <div className="bg-white p-2 mb-3 rounded">
                 <RankMethodPicker
                     hideAll={isLogin}
                     rankMethod={rankMethod}
@@ -66,7 +66,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
                 />
             </div>
 
-            <div className="mt-1">
+            <div className="mt-1 min-h-screen">
                 <ListWrapper
                     isLogin={isLogin}
                     rankMethod={rankMethod}
@@ -74,7 +74,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
                 />
             </div>
 
-            <div className="my-2">
+            <div className="my-3">
                 <Pager
                     hasNextPage={true}
                     hasLastPage={currentPage > 0}

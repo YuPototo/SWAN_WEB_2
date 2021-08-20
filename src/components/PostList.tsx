@@ -13,7 +13,7 @@ export default function PostList({ posts, cardPosition }: Props): ReactElement {
         <>
             {posts.map((post) => (
                 <div
-                    className="bg-white my-2 rounded border border-solid border-gray-300 hover:border-gray-400"
+                    className="my-3 rounded border border-solid border-gray-200 hover:border-gray-300"
                     key={post.id}
                 >
                     <PostCard post={post} cardPosition={cardPosition} />

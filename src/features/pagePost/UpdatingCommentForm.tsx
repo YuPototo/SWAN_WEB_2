@@ -66,11 +66,11 @@ export default function CommentBox({ comment, onCancel }: Props): ReactElement {
             <TextareaAutosize
                 className="text-input w-full"
                 placeholder="说说你的想法"
-                rows={3}
+                minRows={3}
                 value={commentBody}
                 onChange={handleChange}
             />
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-2">
                 <button
                     className="btn-sm btn-info--outline"
                     onClick={() => onCancel()}

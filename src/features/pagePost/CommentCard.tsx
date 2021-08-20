@@ -31,7 +31,7 @@ const UserInfo = ({ authorId, authorName, createdAt }: UserNameProps) => {
                 alt="avatars"
                 className="inline flex-shrink-0 h-7 w-7 rounded-full"
             />
-            <span className="text-sm text-gray-800 mr-2">{authorName}</span>
+            <span className="text-sm text-gray-600 mr-2">{authorName}</span>
             <span className="text-xs text-gray-400">
                 {getTimeToNow(createdAt)}
             </span>

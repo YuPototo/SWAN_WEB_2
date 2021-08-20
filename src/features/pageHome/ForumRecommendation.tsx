@@ -5,11 +5,14 @@ import { forums } from "../../data/forums";
 
 export default function ForumRecommendation(): ReactElement {
     return (
-        <div className="hidden bg-white rounded md:block">
-            <p className="p-3 text-sm text-gray-600">推荐社区</p>
-            <ul className="ml-3">
-                <li className="mb-3 ml-1">
-                    <Link to="/f/4" className="link text-sm flex gap-1">
+        <>
+            <p className="p-3 text-green-600">推荐社区</p>
+            <ul className="ml-2">
+                <li className="mb-2 ml-1">
+                    <Link
+                        to="/f/4"
+                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 round hover:bg-green-100"
+                    >
                         <div className="md:mr-2">
                             <img
                                 src={forums[2].icon}
@@ -21,7 +24,10 @@ export default function ForumRecommendation(): ReactElement {
                     </Link>
                 </li>
                 <li className="mb-1.5 ml-1">
-                    <Link to="/f/1" className="link text-sm flex gap-1">
+                    <Link
+                        to="/f/1"
+                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 rounded hover:bg-green-100"
+                    >
                         <div className="md:mr-2">
                             <img
                                 src={forums[0].icon}
@@ -33,7 +39,10 @@ export default function ForumRecommendation(): ReactElement {
                     </Link>
                 </li>
                 <li className="mb-3 ml-1">
-                    <Link to="/f/2" className="link text-sm flex gap-1">
+                    <Link
+                        to="/f/2"
+                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 rounded hover:bg-green-100"
+                    >
                         <div className="md:mr-2">
                             <img
                                 src={forums[1].icon}
@@ -45,6 +54,6 @@ export default function ForumRecommendation(): ReactElement {
                     </Link>
                 </li>
             </ul>
-        </div>
+        </>
     );
 }

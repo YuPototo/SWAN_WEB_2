@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../app/hooks";
 import { useHistory } from "react-router-dom";
+import { Pencil } from "react-bootstrap-icons";
 
 import toast from "react-hot-toast";
 
@@ -104,7 +105,7 @@ export default function PageForum(): ReactElement {
                 gridTemplateColumns: "68% 32%",
             }}
         >
-            <div className="flex flex-col items-center bg-white my-2 py-3 rounded md:flex-row md:pl-5 md:py-5">
+            <div className="flex flex-col items-center bg-white py-3 rounded md:flex-row md:pl-5 md:py-5">
                 <div className="md:mr-2">
                     <img
                         src={getForumIcon(forumInfo?.forum.id)}
@@ -124,7 +125,7 @@ export default function PageForum(): ReactElement {
                     </div>
                 ) : (
                     <button
-                        className="btn-sm btn-primary self-stretch mx-3 cursor-pointer md:self-center"
+                        className="btn btn-primary self-stretch mx-3 cursor-pointer md:self-center"
                         onClick={handleJoinForum}
                     >
                         加入
@@ -132,16 +133,20 @@ export default function PageForum(): ReactElement {
                 )}
             </div>
             <div className="md:row-start-2 md:col-start-1"></div>
-            <div className="rounded bg-white p-4 my-2 md:row-span-2">
-                <p className="text-gray-700 mb-2">有想要分享的内容吗？</p>
-                <button
-                    className="btn btn-primay--outline"
-                    onClick={handleShare}
-                >
-                    发布一个内容
-                </button>
+            <div className="md:row-span-2">
+                <div className="hidden md:block md:bg-white md:p-5 md:mb-4 md:rounded">
+                    <p className="text-gray-600 mb-4">有想要分享的内容？</p>
+                    <button
+                        className="btn btn-primary--outline w-full flex justify-center items-center gap-2"
+                        onClick={handleShare}
+                    >
+                        <Pencil className="icon" />
+                        <span>发布帖子</span>
+                    </button>
+                </div>
             </div>
-            <div className="h-full md:row-start-3 md:col-start-1 md:-mt-6">
+
+            <div className="h-full md:row-start-3 md:col-start-1 md:-mt-2">
                 <ForumListManager forumId={forumId} isLogin={isLogin} />
             </div>
         </div>

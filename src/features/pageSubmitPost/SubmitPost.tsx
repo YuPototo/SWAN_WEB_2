@@ -89,8 +89,8 @@ function SubmitPost(): ReactElement {
                     setSelectedForum={setSelectedForum}
                 />
             </div>
-            <div className="bg-white rounded p-2">
-                <div className="mb-2">
+            <div className="bg-white rounded p-3">
+                <div className="mb-3">
                     <PostTypePicker
                         postType={postType}
                         onChangePostType={(postType) => setPostType(postType)}
@@ -99,7 +99,7 @@ function SubmitPost(): ReactElement {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-2 flex-col gap-3 items-center">
                         <TextareaAutosize
-                            className="text-input w-full mb-2"
+                            className="text-input w-full mb-3"
                             id="title"
                             name="title"
                             placeholder="标题"
@@ -134,9 +134,9 @@ function SubmitPost(): ReactElement {
                             />
                         )}
                     </div>
-                    <div className="flex gap-2 justify-end mr-3">
+                    <div className="flex gap-2 justify-end mr-3 mt-3">
                         <button
-                            className="btn btn-info--outline"
+                            className="btn btn-primary--outline"
                             type="button"
                             onClick={() => history.go(-1)}
                         >
