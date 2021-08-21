@@ -36,7 +36,7 @@ export default function Signup(): ReactElement {
 
     return (
         <div className="bg-white py-4 px-8">
-            <h1 className="text-lg my-5">登陆</h1>
+            <h1 className="text-lg my-5">登录</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-5 flex flex-col gap-2 md:flex-row md:items-center">
                     <label htmlFor="username">账号</label>
@@ -72,11 +72,11 @@ export default function Signup(): ReactElement {
                         type="submit"
                         disabled={isLoading}
                     >
-                        登陆
+                        登录
                     </button>
                 </div>
                 <div>
-                    已有账号？去
+                    没有账号？去
                     <span
                         className="link"
                         onClick={() => history.push("/signup")}

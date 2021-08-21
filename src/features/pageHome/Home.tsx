@@ -15,7 +15,7 @@ export default function Home(): ReactElement {
 
     const handleShare = () => {
         if (!isLogin) {
-            toast("未登陆，请先创建账号😊");
+            toast("未登录，请先创建账号😊");
             setTimeout(() => {
                 history.push("/signup");
             }, 1500);

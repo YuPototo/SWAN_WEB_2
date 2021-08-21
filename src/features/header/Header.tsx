@@ -59,7 +59,7 @@ export default function Header(): ReactElement {
                             className="btn btn-primary--outline"
                             onClick={() => history.push("/login")}
                         >
-                            登陆
+                            登录
                         </button>
                         <button
                             className="btn btn-primary"

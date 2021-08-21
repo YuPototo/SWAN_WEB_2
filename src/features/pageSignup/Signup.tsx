@@ -129,7 +129,7 @@ export default function Signup(): ReactElement {
                         className="link"
                         onClick={() => history.push("/login")}
                     >
-                        登陆
+                        登录
                     </span>
                 </div>
             </form>

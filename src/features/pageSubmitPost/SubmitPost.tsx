@@ -36,12 +36,12 @@ function SubmitPost(): ReactElement {
         }
     }, [query]);
 
-    // * 检查是否处于登陆状态
+    // * 检查是否处于登录状态
     const isLogin = useAppSelector(selectIsAuthenticated);
 
     useEffect(() => {
         if (!isLogin) {
-            const warningToastId = toast.error(`未登陆，请先创建账号`);
+            const warningToastId = toast.error(`未登录，请先创建账号`);
 
             setTimeout(() => {
                 history.push("/signup");
