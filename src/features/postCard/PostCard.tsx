@@ -72,19 +72,13 @@ const DownvoteButton = ({ voteDirection, onClick }: VoteButtonProps) => {
     if (voteDirection === -1) {
         return (
             <div className="p-1 cursor-pointer" onClick={onClick}>
-                <HandThumbsDownFill
-                    className="icon text-green-500"
-                    onClick={() => onClick()}
-                />
+                <HandThumbsDownFill className="icon text-green-500" />
             </div>
         );
     } else {
         return (
             <div className="p-1 cursor-pointer" onClick={onClick}>
-                <HandThumbsDown
-                    className="icon text-green-600 hover:text-green-700"
-                    onClick={() => onClick()}
-                />
+                <HandThumbsDown className="icon text-green-600 hover:text-green-700" />
             </div>
         );
     }
