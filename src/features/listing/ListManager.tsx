@@ -6,32 +6,61 @@ import ListUserHot from "./ListUserHot";
 import ListUserNew from "./ListUserNew";
 
 import RankMethodPicker, { RankMethod } from "./RankMethodPicker";
-import Pager from "../../components/Pager";
+// import Pager from "../../components/Pager";
 
 interface ListWrapperProps {
     isLogin: boolean;
     rankMethod: RankMethod;
     currentPage: number;
+    onChangePage: (direction: 1 | -1) => void;
 }
 
 const ListWrapper = ({
     isLogin,
     rankMethod,
     currentPage,
+    onChangePage,
 }: ListWrapperProps) => {
     if (isLogin) {
         if (rankMethod === "hot") {
-            return <ListUserHot currentPage={currentPage} />;
+            return (
+                <ListUserHot
+                    currentPage={currentPage}
+                    onChangePage={(direction) => onChangePage(direction)}
+                />
+            );
         } else if (rankMethod === "new") {
-            return <ListUserNew currentPage={currentPage} />;
+            return (
+                <ListUserNew
+                    currentPage={currentPage}
+                    onChangePage={(direction) => onChangePage(direction)}
+                />
+            );
         } else if (rankMethod === "all") {
-            return <ListAllHot currentPage={currentPage} isLogin={isLogin} />;
+            return (
+                <ListAllHot
+                    currentPage={currentPage}
+                    isLogin={isLogin}
+                    onChangePage={(direction) => onChangePage(direction)}
+                />
+            );
         }
     } else {
         if (rankMethod === "hot") {
-            return <ListAllHot currentPage={currentPage} isLogin={isLogin} />;
+            return (
+                <ListAllHot
+                    currentPage={currentPage}
+                    isLogin={isLogin}
+                    onChangePage={(direction) => onChangePage(direction)}
+                />
+            );
         } else if (rankMethod === "new") {
-            return <ListAllNew currentPage={currentPage} />;
+            return (
+                <ListAllNew
+                    currentPage={currentPage}
+                    onChangePage={(direction) => onChangePage(direction)}
+                />
+            );
         }
     }
     return <></>;
@@ -49,6 +78,7 @@ export default function PostManager({ isLogin }: Props): ReactElement {
         setRankMethod(rankMethod);
         setCurrentPage(0);
     };
+
     const handleChangePage = (direction: 1 | -1) => {
         setCurrentPage(currentPage + direction);
         window.scrollTo(0, 0);
@@ -71,16 +101,17 @@ export default function PostManager({ isLogin }: Props): ReactElement {
                     isLogin={isLogin}
                     rankMethod={rankMethod}
                     currentPage={currentPage}
+                    onChangePage={(direction) => handleChangePage(direction)}
                 />
             </div>
-
+            {/* 
             <div className="my-3">
                 <Pager
                     hasNextPage={true}
                     hasLastPage={currentPage > 0}
                     onChangePage={(direction) => handleChangePage(direction)}
                 />
-            </div>
+            </div> */}
         </>
     );
 }

@@ -1,8 +1,9 @@
 import { emptySplitApi } from ".";
 
 import { Post, Listing } from "../../types/types";
+import config from "../../config/config";
 
-const defaultItemLength = 30;
+const defaultItemLength = config.LISTING_NUBMER;
 
 const pageToQuery = (page: number): string => {
     return `skip=${page * defaultItemLength}&limit=${defaultItemLength}`;
@@ -13,38 +14,37 @@ interface ForumQuery {
     forumId: number;
 }
 
+interface ListingResponse {
+    posts: Post[];
+    hasNextPage: boolean;
+}
+
 export const listingApi = emptySplitApi.injectEndpoints({
     endpoints: (build) => ({
-        getAllHotListing: build.query<Post[], number>({
+        getAllHotListing: build.query<ListingResponse, number>({
             query: (page: number) => `listing/hot/all?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
-        getAllNewListing: build.query<Post[], number>({
+        getAllNewListing: build.query<ListingResponse, number>({
             query: (page: number) => `listing/new/all?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
-        getUserHotListing: build.query<Post[], number>({
+        getUserHotListing: build.query<ListingResponse, number>({
             query: (page: number) => `listing/hot/user?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
-        getUserNewListing: build.query<Post[], number>({
+        getUserNewListing: build.query<ListingResponse, number>({
             query: (page: number) => `listing/new/user?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
-        getForumHotListing: build.query<Post[], ForumQuery>({
+        getForumHotListing: build.query<ListingResponse, ForumQuery>({
             query: ({ page, forumId }: ForumQuery) =>
                 `listing/hot/forums/${forumId}?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
-        getForumNewListing: build.query<Post[], ForumQuery>({
+        getForumNewListing: build.query<ListingResponse, ForumQuery>({
             query: ({ page, forumId }: ForumQuery) =>
                 `listing/new/forums/${forumId}?${pageToQuery(page)}`,
-            transformResponse: (response: Listing) => response.posts,
             providesTags: ["Listing"],
         }),
     }),

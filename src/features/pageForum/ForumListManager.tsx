@@ -1,7 +1,6 @@
 import { ReactElement, useState } from "react";
 
 import ForumRankMethodPicker, { RankMethod } from "./ForumRankMethodPicker";
-import Pager from "../../components/Pager";
 import ListForumHot from "./ListForumHot";
 import ListForumNew from "./ListForumNew";
 
@@ -10,6 +9,7 @@ interface ListWrapperProps {
     isLogin: boolean;
     rankMethod: RankMethod;
     currentPage: number;
+    onChangePage: (direction: 1 | -1) => void;
 }
 
 const ListWrapper = ({
@@ -17,6 +17,7 @@ const ListWrapper = ({
     rankMethod,
     currentPage,
     isLogin,
+    onChangePage,
 }: ListWrapperProps) => {
     if (rankMethod === "hot") {
         return (
@@ -24,6 +25,7 @@ const ListWrapper = ({
                 forumId={forumId}
                 isLogin={isLogin}
                 currentPage={currentPage}
+                onChangePage={(direction) => onChangePage(direction)}
             />
         );
     } else if (rankMethod === "new") {
@@ -32,6 +34,7 @@ const ListWrapper = ({
                 forumId={forumId}
                 isLogin={isLogin}
                 currentPage={currentPage}
+                onChangePage={(direction) => onChangePage(direction)}
             />
         );
     }
@@ -74,13 +77,6 @@ export default function PostManager({ isLogin, forumId }: Props): ReactElement {
                     isLogin={isLogin}
                     rankMethod={rankMethod}
                     currentPage={currentPage}
-                />
-            </div>
-
-            <div className="my-2">
-                <Pager
-                    hasNextPage={true}
-                    hasLastPage={currentPage > 0}
                     onChangePage={(direction) => handleChangePage(direction)}
                 />
             </div>

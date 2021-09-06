@@ -3,18 +3,24 @@ import { useGetAllHotListingQuery } from "../../app/services/listing";
 import { useGetVotesMutation } from "../../app/services/vote";
 
 import PostList from "../../components/PostList";
+import Pager from "../../components/Pager";
 
 interface Props {
     currentPage: number;
     isLogin: boolean;
+    onChangePage: (direction: 1 | -1) => void;
 }
 
 export default function ListAllHot({
     currentPage,
     isLogin,
+    onChangePage,
 }: Props): ReactElement {
-    const { data: posts, isLoading: isLoadingPost } =
+    const { data, isLoading: isLoadingPost } =
         useGetAllHotListingQuery(currentPage);
+
+    const posts = data?.posts;
+    const hasNextPage = data?.hasNextPage;
 
     const [getVotes] = useGetVotesMutation();
 
@@ -34,13 +40,24 @@ export default function ListAllHot({
     if (isLoadingPost) {
         return <div className="bg-white p-2">加载中...</div>; // todo: 换成一个 spinner
     }
+
     if (!posts) {
         return <div>No Post?</div>;
     }
 
     return (
         <>
-            <PostList posts={posts} showForumName={true} cardPosition="home" />
+            <PostList
+                posts={posts}
+                showForumName={true}
+                cardPosition="home"
+                hasNextPage={hasNextPage}
+            />
+            <Pager
+                hasNextPage={hasNextPage}
+                hasLastPage={currentPage > 0}
+                onChangePage={(direction) => onChangePage(direction)}
+            />
         </>
     );
 }

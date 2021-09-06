@@ -6,9 +6,14 @@ interface Props {
     showForumName: boolean;
     cardPosition: CardPosition;
     posts: Post[];
+    hasNextPage?: boolean;
 }
 
-export default function PostList({ posts, cardPosition }: Props): ReactElement {
+export default function PostList({
+    posts,
+    cardPosition,
+    hasNextPage,
+}: Props): ReactElement {
     return (
         <>
             {posts.map((post) => (
@@ -19,6 +24,11 @@ export default function PostList({ posts, cardPosition }: Props): ReactElement {
                     <PostCard post={post} cardPosition={cardPosition} />
                 </div>
             ))}
+            {hasNextPage ? null : (
+                <div className="bg-white p-3 rounded text-gray-600 my-2">
+                    这是社区的尽头，没有更多内容了
+                </div>
+            )}
         </>
     );
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, useLocation, Link } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { useAppDispatch } from "./app/hooks";
 

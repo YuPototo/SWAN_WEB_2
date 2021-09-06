@@ -4,14 +4,21 @@ import { useGetVotesMutation } from "../../app/services/vote";
 
 import PostList from "../../components/PostList";
 import NoForumHint from "./NoForumHint";
+import Pager from "../../components/Pager";
 
 interface Props {
     currentPage: number;
+    onChangePage: (direction: 1 | -1) => void;
 }
 
-export default function ListUserHot({ currentPage }: Props): ReactElement {
-    const { data: posts, isLoading: isLoadingPost } =
+export default function ListUserHot({
+    currentPage,
+    onChangePage,
+}: Props): ReactElement {
+    const { data, isLoading: isLoadingPost } =
         useGetUserHotListingQuery(currentPage);
+    const posts = data?.posts;
+    const hasNextPage = data?.hasNextPage;
 
     const [getVotes] = useGetVotesMutation();
 
@@ -44,7 +51,17 @@ export default function ListUserHot({ currentPage }: Props): ReactElement {
 
     return (
         <>
-            <PostList posts={posts} showForumName={true} cardPosition="home" />
+            <PostList
+                posts={posts}
+                showForumName={true}
+                cardPosition="home"
+                hasNextPage={hasNextPage}
+            />
+            <Pager
+                hasNextPage={hasNextPage}
+                hasLastPage={currentPage > 0}
+                onChangePage={(direction) => onChangePage(direction)}
+            />
         </>
     );
 }

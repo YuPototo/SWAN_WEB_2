@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 
 interface Props {
     hasLastPage: boolean;
-    hasNextPage: boolean;
+    hasNextPage?: boolean;
     onChangePage: (direction: 1 | -1) => void;
 }
 
@@ -24,13 +24,14 @@ export default function Pager({
                 <div></div>
             )}
 
-            <button
-                className="btn btn-primary"
-                disabled={!hasNextPage}
-                onClick={() => onChangePage(1)}
-            >
-                下一页
-            </button>
+            {hasNextPage ? (
+                <button
+                    className="btn btn-primary"
+                    onClick={() => onChangePage(1)}
+                >
+                    下一页
+                </button>
+            ) : null}
         </div>
     );
 }
