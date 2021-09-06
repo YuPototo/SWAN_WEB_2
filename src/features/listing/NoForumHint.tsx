@@ -12,17 +12,17 @@ export default function NoForumHint(): ReactElement {
             <ul className="ml-4 mt-3">
                 <li className="mb-2">
                     <Link
-                        to="/f/4"
-                        className="p-1.5 rouended flex gap-2 items-center link hover:bg-green-50"
+                        to="/f/5"
+                        className="p-1.5 rouended  flex gap-2 items-center link hover:bg-green-50"
                     >
                         <div className="md:mr-2">
                             <img
-                                src={forums[2].icon}
+                                src={forums[3].icon}
                                 alt="icon"
                                 className="inline flex-shrink-0 h-7 w-7 rounded-full"
                             />
                         </div>
-                        段子
+                        极乐世界的征服
                     </Link>
                 </li>
                 <li className="mb-2">

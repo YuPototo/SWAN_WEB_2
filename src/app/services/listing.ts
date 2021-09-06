@@ -1,6 +1,6 @@
 import { emptySplitApi } from ".";
 
-import { Post, Listing } from "../../types/types";
+import { Post } from "../../types/types";
 import config from "../../config/config";
 
 const defaultItemLength = config.LISTING_NUBMER;
