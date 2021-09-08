@@ -20,7 +20,7 @@ export default function ForumRecommendation(): ReactElement {
                                 className="inline flex-shrink-0 h-6 w-6 rounded-full"
                             />
                         </div>
-                        先驱的遗物
+                        先驱的遗物 ROTP
                     </Link>
                 </li>
                 <li className="mb-1.5 ml-1">
