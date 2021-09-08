@@ -20,7 +20,7 @@ export default function ForumRecommendation(): ReactElement {
                                 className="inline flex-shrink-0 h-6 w-6 rounded-full"
                             />
                         </div>
-                        极乐世界的征服
+                        先驱的遗物
                     </Link>
                 </li>
                 <li className="mb-1.5 ml-1">
@@ -51,21 +51,6 @@ export default function ForumRecommendation(): ReactElement {
                             />
                         </div>
                         Python
-                    </Link>
-                </li>
-                <li className="mb-2 ml-1">
-                    <Link
-                        to="/f/3"
-                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 round hover:bg-green-100"
-                    >
-                        <div className="md:mr-2">
-                            <img
-                                src={forums[2].icon}
-                                alt="icon"
-                                className="inline flex-shrink-0 h-6 w-6 rounded-full"
-                            />
-                        </div>
-                        JavaScript
                     </Link>
                 </li>
             </ul>

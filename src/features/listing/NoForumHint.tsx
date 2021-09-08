@@ -22,7 +22,7 @@ export default function NoForumHint(): ReactElement {
                                 className="inline flex-shrink-0 h-7 w-7 rounded-full"
                             />
                         </div>
-                        极乐世界的征服
+                        先驱的遗物
                     </Link>
                 </li>
                 <li className="mb-2">

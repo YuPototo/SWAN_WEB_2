@@ -21,7 +21,7 @@ export const forums = [
     },
     {
         id: 5,
-        name: "极乐世界的征服",
-        icon: "https://www.civillink.net/sozai/images_small/pics3153.png",
+        name: "先驱的遗物",
+        icon: "https://pic4.zhimg.com/80/v2-0274231f1a0b5889e35a5fc63ee05b13_720w.jpg",
     },
 ];
