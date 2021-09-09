@@ -21,7 +21,7 @@ export const forums = [
     },
     {
         id: 5,
-        name: "先驱的遗物 ROTP",
+        name: "银河霸主 ROTP",
         icon: "https://pic4.zhimg.com/80/v2-0274231f1a0b5889e35a5fc63ee05b13_720w.jpg",
     },
 ];
