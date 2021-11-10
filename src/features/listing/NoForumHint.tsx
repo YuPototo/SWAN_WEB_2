@@ -17,42 +17,12 @@ export default function NoForumHint(): ReactElement {
                     >
                         <div className="md:mr-2">
                             <img
-                                src={forums[3].icon}
-                                alt="icon"
-                                className="inline flex-shrink-0 h-7 w-7 rounded-full"
-                            />
-                        </div>
-                        银河霸主 ROTP
-                    </Link>
-                </li>
-                <li className="mb-2">
-                    <Link
-                        to="/f/1"
-                        className="p-1.5 rouended  flex gap-2 items-center link hover:bg-green-50"
-                    >
-                        <div className="md:mr-2">
-                            <img
                                 src={forums[0].icon}
                                 alt="icon"
                                 className="inline flex-shrink-0 h-7 w-7 rounded-full"
                             />
                         </div>
-                        新闻
-                    </Link>
-                </li>
-                <li className="mb-2">
-                    <Link
-                        to="/f/2"
-                        className="p-1.5 rouended flex gap-2 items-center link hover:bg-green-50"
-                    >
-                        <div className="md:mr-2">
-                            <img
-                                src={forums[1].icon}
-                                alt="icon"
-                                className="inline flex-shrink-0 h-7 w-7 rounded-full"
-                            />
-                        </div>
-                        Python
+                        文明的余烬
                     </Link>
                 </li>
             </ul>

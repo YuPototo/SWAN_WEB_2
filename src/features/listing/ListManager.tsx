@@ -104,14 +104,6 @@ export default function PostManager({ isLogin }: Props): ReactElement {
                     onChangePage={(direction) => handleChangePage(direction)}
                 />
             </div>
-            {/* 
-            <div className="my-3">
-                <Pager
-                    hasNextPage={true}
-                    hasLastPage={currentPage > 0}
-                    onChangePage={(direction) => handleChangePage(direction)}
-                />
-            </div> */}
         </>
     );
 }

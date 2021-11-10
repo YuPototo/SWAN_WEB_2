@@ -15,42 +15,12 @@ export default function ForumRecommendation(): ReactElement {
                     >
                         <div className="md:mr-2">
                             <img
-                                src={forums[3].icon}
-                                alt="icon"
-                                className="inline flex-shrink-0 h-6 w-6 rounded-full"
-                            />
-                        </div>
-                        银河霸主 ROTP
-                    </Link>
-                </li>
-                <li className="mb-1.5 ml-1">
-                    <Link
-                        to="/f/1"
-                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 rounded hover:bg-green-100"
-                    >
-                        <div className="md:mr-2">
-                            <img
                                 src={forums[0].icon}
                                 alt="icon"
                                 className="inline flex-shrink-0 h-6 w-6 rounded-full"
                             />
                         </div>
-                        新闻
-                    </Link>
-                </li>
-                <li className="mb-3 ml-1">
-                    <Link
-                        to="/f/2"
-                        className="text-gray-600 cursor-pointer text-sm flex items-center gap-1 p-1.5 rounded hover:bg-green-100"
-                    >
-                        <div className="md:mr-2">
-                            <img
-                                src={forums[1].icon}
-                                alt="icon"
-                                className="inline flex-shrink-0 h-6 w-6 rounded-full"
-                            />
-                        </div>
-                        Python
+                        文明的余烬
                     </Link>
                 </li>
             </ul>
