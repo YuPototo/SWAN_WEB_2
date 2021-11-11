@@ -9,7 +9,6 @@ import {
     Share,
 } from "react-bootstrap-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import marked from "marked";
 import dompurify from "dompurify";
 
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -102,13 +101,6 @@ const UpvoteButton = ({
             </div>
         );
     }
-};
-
-const renderWithStyle = (showStyle: boolean) => {
-    if (showStyle) {
-        return "render-html";
-    }
-    return "";
 };
 
 export type CardPosition = "home" | "forum" | "postPage" | "profile";
@@ -327,20 +319,11 @@ export default function PostCard({ post, cardPosition }: Props): ReactElement {
                                 }}
                                 onClick={clickBody}
                             >
-                                <div
-                                    className={renderWithStyle(
-                                        cardPosition === "postPage"
-                                    )}
-                                    dangerouslySetInnerHTML={{
-                                        __html:
-                                            cardPosition === "postPage"
-                                                ? sanitizer(marked(body))
-                                                : clipLongString(
-                                                      sanitizer(marked(body)),
-                                                      150
-                                                  ),
-                                    }}
-                                />
+                                <div>
+                                    {cardPosition === "postPage"
+                                        ? body
+                                        : clipLongString(body, 100)}
+                                </div>
                             </span>
                         )
                     ) : null}

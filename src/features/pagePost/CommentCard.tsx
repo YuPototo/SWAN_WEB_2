@@ -3,7 +3,6 @@ import { CommentTreeNode } from "../../types/types";
 import { getTimeToNow } from "../../utils/timeDiff";
 import CommentForm from "./CommentForm";
 import UpdatingCommentForm from "./UpdatingCommentForm";
-import marked from "marked";
 import dompurify from "dompurify";
 
 import { ArrowsAngleExpand } from "react-bootstrap-icons";
@@ -118,12 +117,7 @@ export default function CommentCard({ comment }: Props): ReactElement {
                                 className="mb-4 mt-2 text-gray-800"
                                 style={{ whiteSpace: "pre-wrap" }}
                             >
-                                <div
-                                    className="render-html"
-                                    dangerouslySetInnerHTML={{
-                                        __html: sanitizer(marked(comment.body)),
-                                    }}
-                                />
+                                <div>{comment.body}</div>
                             </div>
 
                             <div className="mb-4 text-gray-500 text-xs flex gap-2">
